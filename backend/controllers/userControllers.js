@@ -56,7 +56,12 @@ const userController = {
        const {name, email, password} = user
 
        //check user
-     
+
+       const check = await User.findOne({email})
+       if(check){
+        return res.status(400).json({msg:"This email is already registered"})
+       }
+      
        // add user
        const newUser = new User({
         name,
@@ -74,6 +79,7 @@ const userController = {
       
     },
     signing: async (req, res) =>{
+      try{
          // get cred
       const { email, password } = req.body;
 
@@ -94,15 +100,17 @@ const userController = {
       res.cookie("_apprftoken", rf_token, {
         httpOnly: true,
         path: "/api/auth/access",
-        maxAage: 24 * 60 * 60 * 1000, // 24h
+        maxAage: 24 * 60 * 60 * 1000, 
       });
 
       // signing success
       res.status(200).json({ msg: "Signing success" });
-    } catch (err) {
+    } catch(err) {
       res.status(500).json({ msg: err.message });
     }
   }
+}
+
     
   
 
