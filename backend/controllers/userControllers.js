@@ -38,11 +38,18 @@ const userController = {
         // create token
         const newUser = {name, email, password:hashpassword}
         const activation_token = createToken.activation(newUser)
+        const encodeurl =  encodeURIComponent(activation_token)
          //send email
-         const url = `https://localhost:8000/api/auth/activate/${activation_token}`
+         const url = `http://localhost:5173/activation/${encodeurl}`
          sendmail.sendEmailRegsister(email, url, "Verify your email")
-        //regsistration success
-        res.status(200).json({msg:"Welcome! Please check your email."})
+       
+         await User.create(newUser)
+       
+
+    
+
+       // registered succesfully
+         res.status(200).json({msg:"Welcome! Please check your email."})
       } catch (error) {
         res.status(500).json({msg:error.message})
       }
@@ -50,27 +57,11 @@ const userController = {
     activate: async (req, res) =>{
      try{
        //get token
-       const {activation_token} = req.body
+       const activation_token = req.body.activation_token
+  
        //verify token
        const user = jwt.verify(activation_token, process.env.ACTIVATION_TOKEN)
-       const {name, email, password} = user
-
-       //check user
-
-       const check = await User.findOne({email})
-       if(check){
-        return res.status(400).json({msg:"This email is already registered"})
-       }
       
-       // add user
-       const newUser = new User({
-        name,
-        email,
-        password
-       })
-       await newUser.save()
-       // activation success
-       res.status(200).json({msg:"Your account has been activated, you can now sign in"})
      }
      catch (error){
         res.status(500).json({msg:error.message})
@@ -155,7 +146,7 @@ const userController = {
       // get password
       const {password} = req.body
       // hash password
-      const salt = bcrypt.genSalt()
+      const salt = await bcrypt.genSalt()
       const hashpassword = await bcrypt.hash(password, salt)
       //update password
       await User.findOneAndUpdate(
@@ -168,6 +159,22 @@ const userController = {
     catch(err){
       res.status(500).json({msg:err.message})
     }
+  },
+  info: async (req, res) =>{
+     try {
+      const user= await User.findById(req.user.id).select("-password")
+      res.status(200).json({user})
+     } catch (error) {
+      res.status(500).json({msg:error.message})
+     }
+  },
+  signout: async (req, res) =>{
+     try {
+      res.clearCookie("_apprftoken", {path:"/api/auth/access"})
+      return res.status(200).json({msg:"Signout success"})
+     } catch (error) {
+      res.status(500).json({msg:error.message})
+     }
   }
 }
 
