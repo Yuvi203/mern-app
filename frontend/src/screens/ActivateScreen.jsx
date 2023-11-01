@@ -8,7 +8,7 @@ const ActivateScreen = () => {
     if(activation_token){
         const activateUser = async () =>{
             try {
-                const res = await axios.post("http://localhost:3000/api/auth/activatation",{
+                const res = await axios.post("http://localhost:8000/api/auth/activatation",{
                     activation_token
                 })
                 alert("activate succesfully")

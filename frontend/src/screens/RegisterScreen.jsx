@@ -42,7 +42,7 @@ const RegisterScreen = () => {
       alert("Password do not match")
      }
      try {
-       const res = await axios.post("http://localhost:3000/api/auth/register", {
+       const res = await axios.post("http://localhost:8000/api/auth/register", {
         name,
         email,
         password
@@ -111,10 +111,6 @@ input{
   flex-direction:column;
   align-items:center;
   justify-content:center;
- 
-  
- 
-  
 
 }
 .pass-con{

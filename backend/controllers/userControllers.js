@@ -40,7 +40,7 @@ const userController = {
         const activation_token = createToken.activation(newUser)
         const encodeurl =  encodeURIComponent(activation_token)
          //send email
-         const url = `http://localhost:5173/activation/${encodeurl}`
+         const url = `http://localhost:5000/activation/${encodeurl}`
          sendmail.sendEmailRegsister(email, url, "Verify your email")
        
          await User.create(newUser)
@@ -131,11 +131,11 @@ const userController = {
       const ac_token = createToken.access({id:user.id})
       
       // send email
-      const url = `http://localhost:3000/auth/reset-password/${ac_token}`;
+      const url = `http://localhost:3000/reset-password/${ac_token}`;
       const name = user.name
       sendmail.sendEmailReset(email, url, "Reset your password", name)
       // sucess
-      res.status(200).json({msg:"Re-send the password , please check your email"})
+      res.status(200).send(ac_token)
 
     } catch (error) {
          res.status(500).json({msg:error.message})

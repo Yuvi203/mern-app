@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import axios from "axios"
 import {gettoken, getusers, login} from "./redux/slices/AuthSlice"
+import ForgetScreen from "./screens/ForgetScreen"
+import ResetScreen from "./screens/ResetScreen"
 
 const App = () => {
   const dispatch = useDispatch()
@@ -44,6 +46,8 @@ const App = () => {
       <Route path="/login" element={<LoginScreen/>}/>
       <Route path="/register" element={<RegisterScreen/>}/>
      <Route path="/activation/:activation_token" element={<ActivateScreen/>}/>
+     <Route path="/forget-pass" element={<ForgetScreen/>}/>
+     <Route path="/reset-password" element={<ResetScreen/>}/>
       </> }
      
      

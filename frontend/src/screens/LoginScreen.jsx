@@ -35,7 +35,7 @@ const LoginScreen = () => {
       alert("Please enter a valid email address")
    }
    try {
-        await axios.post("http://localhost:3000/api/auth/signing", {email, password})
+        await axios.post("http://localhost:8000/api/auth/signing", {email, password})
         localStorage.setItem("_appSigning", true)
         dispatch(login())
         alert("signing success")
@@ -58,7 +58,7 @@ const LoginScreen = () => {
         </div>
         </div>
         <Link to={"/register"} className="dnthave">Don’t have an account? Sign up</Link>
-        <a href="#" className="forgetpass">Forget Password?</a>
+        <Link to={"/forget-pass"} className="forgetpass">Forget Password?</Link>
         <input type="submit" value="Sign in" className="btn1"/>
       </form>
    
