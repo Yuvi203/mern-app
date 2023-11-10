@@ -5,7 +5,10 @@ import {MdVisibility, MdVisibilityOff} from "react-icons/md"
 import { isEmail, isEmpty } from '../helpers/validate'
 import axios from 'axios'
 import {useDispatch} from "react-redux"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {login} from "../redux/slices/AuthSlice"
+
 const initialState = {
   email:"",
   password:""
@@ -29,24 +32,33 @@ const LoginScreen = () => {
   const Login  = async (e) =>{
      e.preventDefault()
      if(isEmpty(email) || isEmpty(password)){
-      alert("Please fill in all fields")
+      return toast("Please fill in all fields.", {
+        className: "toast",
+        bodyClassName:"toast"
+      });
      }
      if(!isEmail(email)){
-      alert("Please enter a valid email address")
+      return toast("Please enter a valid email address.", {
+        className: "toast",
+        bodyClassName:"toast"
+      });
    }
    try {
         await axios.post("http://localhost:8000/api/auth/signing", {email, password})
         localStorage.setItem("_appSigning", true)
         dispatch(login())
-        alert("signing success")
         navigate("/")
       
    } catch (error) {
-     alert("signing failed")
+      toast(error.response.data.msg, {
+         className: "toast",
+         bodyClassName:"toast"
+      })
    }
   }
   return (
     <Container>
+      <ToastContainer/>
       <form className='form-container' onSubmit={Login}>
       <h4>Cloud  <span>Portfolio</span></h4>
       <h5>Sign in to your account.</h5>
@@ -69,6 +81,7 @@ const LoginScreen = () => {
 export default LoginScreen
 
 const Container = styled.div`
+position:relative;
      input{
   display: block;
   margin: 20px auto;
@@ -91,6 +104,38 @@ const Container = styled.div`
   position:absolute;
   right:10%;
   margin-right:10px;
+}
+@media screen and (min-width:1824px) {
+  position:absolute;
+  left:50%;
+  top:20%;
+}
+@media screen and (max-width:1224px) {
+  position:absolute;
+  left:50%;
+  top:5%;
+  bottom:5%;
+} 
+@media screen and (max-width:1218px) {
+  position:absolute;
+  top:25%;
+ 
+} 
+@media screen and (max-width:1818px) {
+  position:absolute;
+  top:5%;
+  left:50%;
+  bottom:15%;
+} 
+@media screen and (max-width:622px) {
+  position:absolute;
+  top:25%;
+  bottom:5%;
+}
+@media screen and (max-width:1250px) {
+  position:absolute;
+  top:25%;
+  bottom:5%;
 }
 
 `

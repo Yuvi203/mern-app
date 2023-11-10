@@ -3,7 +3,8 @@ import axios from "axios"
 import {MdVisibility, MdVisibilityOff} from "react-icons/md"
 import styled from "styled-components"
 import { isEmpty, isLength, isMatch } from '../helpers/validate'
-import { useParams } from 'react-router-dom'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const initialState = {
     password:"",
@@ -35,13 +36,22 @@ const ResetScreen = () => {
     const handleSubmit = async (e) =>{
         e.preventDefault()
         if(isEmpty(password) || isEmpty(cf_password)){
-            alert("Please fill in all fields")
+          return toast("Please fill in all fields.", {
+            className: "toast",
+            bodyClassName: "toast",
+          });
         }
         if (isLength(password)){
-            alert("Password must be at least 6 characters")
+          return toast("Password must be at least 6 characters.", {
+            className: "toast",
+            bodyClassName: "toast",
+          });
         }
         if(!isMatch(password, cf_password)){
-            alert("Password did not match")
+          return toast("Password did not match", {
+            className: "toast",
+            bodyClassName: "toast",
+          });
         }
         try {
             await axios.post("http://localhost:8000/api/auth/reset_pass", {
@@ -49,14 +59,22 @@ const ResetScreen = () => {
             }, {
                 headers:{Authorization:token}
             })
-            alert("Password changed succesfully")
             handleReset()
+            return toast("Password was successfully changed 🤗", {
+              className: "toast",
+              bodyClassName: "toast",
+            });
         } catch (error) {
-            alert("Error....")
+          toast(error.response.data.msg, {
+            className: "toast",
+            bodyClassName: "toast",
+          });
         }
         console.log(token)
     }  
   return (
+    <>
+     <ToastContainer/>
     <Container>
         <form className='form-container' onSubmit={handleSubmit}>
         <div className="pass-con">
@@ -74,6 +92,7 @@ const ResetScreen = () => {
         <button type='submit'>Submit</button>
         </form>
     </Container>
+    </>
   )
 }
 

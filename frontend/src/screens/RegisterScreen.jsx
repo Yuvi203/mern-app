@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import { isEmail, isEmpty, isLength, isMatch } from "../helpers/validate"
 import axios from "axios"
 import {MdVisibility, MdVisibilityOff} from "react-icons/md"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const initialState = {
   name:"",
@@ -30,16 +32,28 @@ const RegisterScreen = () => {
      e.preventDefault()
 
      if(isEmpty(name) || isEmpty(password)){
-      alert("Please fill in all fields")
+      return toast("Please fill in all fields.", {
+        className: "toast",
+        bodyClassName:"toast"
+      });
      }
      if(!isEmail(email)){
-        alert("Please enter a valid email address")
+      return toast("Please enter a valid email address.", {
+        className: "toast",
+        bodyClassName:"toast"
+      });
      }
      if(isLength(password)){
-      alert("Password must be atleast 6 characters")
+      return toast("Password must be at least 6 characters.", {
+        className: "toast",
+        bodyClassName: "toast",
+      });
      }
      if(!isMatch(password, cf_password)){
-      alert("Password do not match")
+      return toast("Password did not match.", {
+        className: "toast",
+        bodyClassName: "toast",
+      });
      }
      try {
        const res = await axios.post("http://localhost:8000/api/auth/register", {
@@ -47,10 +61,16 @@ const RegisterScreen = () => {
         email,
         password
        })
-       alert("Registered succesfully")
-       navigate("/login")
+       toast(res.data.msg, {
+        className: "toast",
+        bodyClassName: "toast",
+      });
+       navigate("/")
      } catch (error) {
-       console.log(error)
+      toast(error.response.data.msg, {
+        className: "toast",
+        bodyClassName: "toast",
+      });
      }
      handleReset()
     
@@ -64,6 +84,8 @@ const RegisterScreen = () => {
   }
 
   return (
+    <>
+     <ToastContainer />
      <Container>
        <form className='form-container' onSubmit={register}>
       {/* <h4>Cloud  <span>Portfolio</span></h4>
@@ -85,6 +107,7 @@ const RegisterScreen = () => {
         <button>Register</button>
       </form>
      </Container>
+     </>
   )
 }
 
@@ -139,4 +162,36 @@ input{
     background: #5d33e6;
   }
   }
+  @media screen and (min-width:1824px) {
+  position:absolute;
+  left:50%;
+  top:20%;
+}
+@media screen and (max-width:1224px) {
+  position:absolute;
+  left:50%;
+  top:5%;
+  bottom:5%;
+} 
+@media screen and (max-width:1218px) {
+  position:absolute;
+  top:25%;
+ 
+} 
+@media screen and (max-width:1818px) {
+  position:absolute;
+  top:5%;
+  left:50%;
+  bottom:15%;
+} 
+@media screen and (max-width:622px) {
+  position:absolute;
+  top:25%;
+  bottom:5%;
+}
+@media screen and (max-width:1250px) {
+  position:absolute;
+  top:25%;
+  bottom:5%;
+}
 `

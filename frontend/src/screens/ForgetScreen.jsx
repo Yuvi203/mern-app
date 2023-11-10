@@ -3,6 +3,8 @@ import styled from "styled-components"
 import { isEmail, isEmpty } from '../helpers/validate';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ForgetScreen = () => { 
 
@@ -18,29 +20,45 @@ const ForgetScreen = () => {
     const handleSubmit = async (e) =>{
       e.preventDefault()
        if(isEmpty(email)){
-        alert("Please fill Email field")
+        return toast("Please fill email field.", {
+          className: "toast",
+          bodyClassName:"toast"
+        });
        }
        if(!isEmail(email)){
-        alert("Please enter a valid email address")
+        return toast("Please enter a valid email address.", {
+          className: "toast",
+          bodyClassName:"toast"
+        });
        }
        try {
         const res =  await axios.post("http://localhost:8000/api/auth/forgot_pass", {email})
-           alert("Please check your email")
               localStorage.setItem("data", res.data)
               console.log(res.data)
            handleReset()
            navigate("/reset-password")
+           return toast("Please check your email 📧", {
+            className: "toast",
+            bodyClassName: "toast",
+          });
        } catch (error) {
-           alert("Error!..")
+        toast(error.response.data.msg, {
+          className: "toast",
+          bodyClassName: "toast",
+        });
        }
     }
   return (
+    <>
+     <ToastContainer/>
      <Container>
        <form className='form-container' onSubmit={handleSubmit}>
         <input type='text' name='email' placeholder='Enter Email...' onChange={(e)=> setEmail(e.target.value)}/>
        <button>Send</button>
        </form>
      </Container>
+    </>
+    
   )
 }
 

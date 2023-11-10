@@ -135,7 +135,15 @@ a:hover {
     top: 92%;
     left: 24%;
 }
+
   }
+.toast{
+  background-color: var(--sidebar-dark-color) !important;
+  color:white;
+  svg{
+    color:white;
+  }
+}  
 
 `
 
