@@ -10,7 +10,7 @@ const Homecom1 = () => {
       <Bounce left>
       <div className='left'>
           <h1>Where You Can Search <span>Millions of Portfolios</span></h1>
-          <p>Sit tellus lobortis sed senectus vivamus molestie. Condimentum volutpat morbi facilisis quam scelerisque sapien. Et, penatibus aliquam amet tellus </p>
+          <p>Cloud Portfolio provides a platform for individuals to build and maintain a professional online Porfolio. Users can showcase their career achievements, connect with others in their industry.</p>
           <div className='left-button'>
             <Link to={"/portfolios"}><button className='btn1'>Explore</button></Link>
             <Link to={"/resume"}><button className='btn1'>Create</button></Link>
