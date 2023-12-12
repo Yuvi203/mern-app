@@ -1,31 +1,31 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Profile = ({data}) => {
-  return (
-      <Container>
-       <img src="https://randomuser.me/api/portraits/women/79.jpg" alt="user"/>
-       <h3>{data.Firstname}</h3>
-	   <h6>{data.Age}</h6>
-       <p>{data.Profession}<br/> carrer</p>
-       <div className='buttons'>
-         <button className='primary'>Message</button>
-         <button className='primary'>Portfolio</button>
-       </div>
-       {/* <div className='skills'>
-         <h6>Skills</h6>
-         <ul>
-			<li>{skill1}</li>
-			<li>{skill2}</li>
-			<li>{skill3}</li>
-			<li>{skill4}</li>
-         </ul>
-       </div> */}
-      </Container>
+const UserProfile = ({name, age, profession, skill1, skill2, skill3, skill4}) => {
+  return(
+    <Container>
+    <img src="https://randomuser.me/api/portraits/women/79.jpg" alt="user"/>
+    <h3>{name}</h3>
+    <h6>{age}</h6>
+    <p>{profession} <br/> carrer</p>
+    {/* <div className='buttons'>
+      <button className='primary'>Message</button>
+      <button className='primary'>Portfolio</button>
+    </div> */}
+    <div className='skills'>
+      <h6>Skills</h6>
+      <ul>
+         <li>{skill1}</li>
+         <li>{skill2}</li>
+         <li>{skill3}</li>
+         <li>{skill4}</li>
+      </ul>
+    </div>
+   </Container>
   )
 }
 
-export default Profile
+export default UserProfile
 
 const Container = styled.div`
     background-color: #231E39;

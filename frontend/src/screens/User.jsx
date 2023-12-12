@@ -6,6 +6,7 @@ import { getid, getusers } from '../redux/slices/ResumeSlice'
 import styled from 'styled-components'
 import img from "../img/man.png"
 import Profile from '../components/Profile'
+import UserProfile from '../components/UserProfile'
 
 
 const User = () => { 
@@ -28,7 +29,7 @@ const User = () => {
     <Container>
       <div className='box'>
         <div>
-          <Profile name={users.Firstname} age={users.Age} profession={users.Profession} skill1={users.Skill} skill2={users.Skill2} skill3={users.Skill3} skill4={users.Skill4}/>
+          <UserProfile name={users.Firstname} age={users.Age} profession={users.Profession} skill1={users.Skill} skill2={users.Skill2} skill3={users.Skill3} skill4={users.Skill4}/>
         </div>
         <div className='buttons'>
           <Link to={`/portfolio/${users._id}`}><button className='primary'>Portfolio</button></Link>

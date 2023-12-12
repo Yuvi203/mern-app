@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PersonalDetails from '../components/PersonalDetails'
 import Education from '../components/Education'
 import Experiences from '../components/Experiences'
@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { isEmpty } from '../helpers/validate'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { getusersall } from '../redux/slices/ResumeSlice'
 
 
 
@@ -53,6 +54,9 @@ const ResumeScreen = () => {
   const [formdata, Setformdata] = useState(initialState)
   const [sucess, setSucess] = useState(false)
   const {Firstname, Lastname, Email, Profession, Age, MobileNo, PersonalDescription, CollegeStartdate, CollegeEnddate, Degree, University, EducationDescription, Skill, Skill2, Skill3, Skill4, AdditionalSkills, Percentage, Percentage2, Percentage3, Percentage4, CompanyStartdate, CompanyEnddate, Roll, Companyname, ExperienceDescription, Title, Link, Description} = formdata
+ 
+
+
   const handleSubmit = async (e) =>{
     e.preventDefault()
     if(isEmpty(formdata)){
@@ -66,6 +70,7 @@ const ResumeScreen = () => {
      .then((res)=>{
       localStorage.setItem("active", res.data.activation_token)
       localStorage.setItem("id", res.data.id)
+      getUsers()
       navigate("/sucess")
      })
     } catch (error) {
@@ -75,6 +80,11 @@ const ResumeScreen = () => {
      })
   
     }
+  }
+  const getUsers = async () =>{
+    const allusers = await axios.get("http://localhost:8000/api/getdetailsall").then((res)=>{
+      dispatch(getusersall(res.data))
+    })
   }
   const PageDisplay = () =>{
     if(page === 0){

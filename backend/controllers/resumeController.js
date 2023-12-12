@@ -22,6 +22,14 @@ const resumeController ={
          catch (error) {
             res.status(500).json({msg:error.message})
          }
+    },
+    getdetailsall: async (req, res) =>{
+      try {
+        const user = await Portfolio.find()
+        res.status(200).send(user)
+      } catch (error) {
+        res.status(500).json({msg:error.message})
+      }
     }
 }
 

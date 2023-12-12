@@ -5,7 +5,7 @@ import axios from "axios"
 import {gettoken, getusers, login} from "./redux/slices/AuthSlice"
 import { lazy, Suspense } from "react"
 import Loading from "./components/Loading"
-import { SelectisUser, getid } from "./redux/slices/ResumeSlice"
+import { SelectisUser, getid, getusersall } from "./redux/slices/ResumeSlice"
 
 
 const Loginscreen = lazy(()=> import("./screens/LoginScreen"))
@@ -34,6 +34,12 @@ const App = () => {
   const user_id = localStorage.getItem("id")
   
   const {users, users_id} = useSelector((state)=> state.resume)
+
+  useEffect(()=>{
+    const allusers = axios.get("http://localhost:8000/api/getdetailsall").then((res)=>{
+      dispatch(getusersall(res.data))
+    })
+  }, [])
   
 
   useEffect(()=>{

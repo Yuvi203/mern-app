@@ -4,15 +4,18 @@ import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 
 const Profiles = () => {
-  const {users} = useSelector((state)=> state.resume)
+  const {allusers} = useSelector((state)=> state.resume)
+  
 
   return (
     <Container>
-     {users.map((data , i)=>{
-      return(
-        <Profile name={data.Firstname} age={data.Age} profession={data.Profession} skill1={data.Skill} skill2={data.Skill2} skill3={data.Skill3} skill4={data.Skill4}/>
-      )
-     })}
+      {allusers.map((item, i)=>{
+         return(
+          <div key={i}>
+           <Profile data={item}/>
+          </div>
+         )
+      })}
     </Container>
   )
 }
