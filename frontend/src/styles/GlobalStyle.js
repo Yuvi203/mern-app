@@ -126,7 +126,7 @@ a:hover {
   left: 8%;
   transition: 0.3s;
   cursor: pointer;
-  :hover{
+  &:hover{
     background: #5d33e6;
   }
 }
@@ -242,6 +242,21 @@ a:hover {
     align-items:center;
     justify-content:center;
    }
+   .primary{
+  background-color: transparent;
+	border: 1px solid #03BFCB;
+	border-radius: 3px;
+  color: #02899C;
+	font-family: Montserrat, sans-serif;
+	font-weight: 500;
+	padding: 10px 25px;
+  margin:10px;
+  cursor: pointer;
+ &:hover{
+  color: #231E39;
+  background-color: #03BFCB;
+   }
+    }
 `
 
 export default GlobalStyle

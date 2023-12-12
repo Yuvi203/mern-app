@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from "styled-components"
 import Homecom1 from '../components/Homecom1'
+import { Link } from 'react-router-dom'
 
 
 
@@ -15,6 +16,7 @@ const HomeScreen = () => {
             <div className="line-4"></div>
           </div>
       <Homecom1/>
+      
     </Container>
   )
 }

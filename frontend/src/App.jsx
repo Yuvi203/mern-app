@@ -1,32 +1,56 @@
-import {Router, Route, Routes} from "react-router-dom"
+import {Router, Route, Routes, useNavigate, Navigate, useParams} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import axios from "axios"
 import {gettoken, getusers, login} from "./redux/slices/AuthSlice"
 import { lazy, Suspense } from "react"
 import Loading from "./components/Loading"
-import ExploteScreen from "./screens/ExploteScreen"
-import ResumeScreen from "./screens/ResumeScreen"
+import { SelectisUser, getid } from "./redux/slices/ResumeSlice"
+
 
 const Loginscreen = lazy(()=> import("./screens/LoginScreen"))
 const Registerscreen = lazy(()=> import("./screens/RegisterScreen"))
 const Homescreen = lazy(()=> import("./screens/HomeScreen"))
 const Forgetscreen = lazy(()=> import("./screens/ForgetScreen"))
 const Resetscreen = lazy(()=> import("./screens/ResetScreen"))
+const Profiles = lazy(()=> import("./screens/Profiles"))
 const Pagenotfoundscreen = lazy(()=> import("./screens/404Screen"))
-
-
+const Userscreen = lazy(()=> import("./screens/User"))
+const ResumeScreen = lazy(()=> import("./screens/ResumeScreen"))
+const Explorescreen = lazy(()=> import("./screens/ExploteScreen"))
+const Successscreen = lazy(()=> import("./screens/Success"))
+const PortfolioScreen = lazy(()=> import("./screens/PortfolioScreen"))
 
 
 const App = () => {
  
   const dispatch = useDispatch()
-  const {users, token, isLoggedin} = useSelector((state)=> state.auth)
+  const {token, isLoggedin} = useSelector((state)=> state.auth)
+  const navigate = useNavigate()
+  const isUser = useSelector(SelectisUser)
+  const appsigning = localStorage.getItem("_appSigning")
+  const data = localStorage.getItem("data")
+  const active = localStorage.getItem("active")
+  const user_id = localStorage.getItem("id")
+  
+  const {users, users_id} = useSelector((state)=> state.resume)
+  
+
   useEffect(()=>{
-   const appsigning = localStorage.getItem("_appSigning")
+   if(active){  
+    navigate(`/user/${user_id}`)
+    console.log(user_id)
+   }
+   else{
+    navigate("/")
+   }
+  }, [active])
+
+  useEffect(()=>{
    if(appsigning){
+
     const getToken = async () =>{
-      const res = await axios.post("http://localhost:3000/api/auth/access", null)
+      const res = await axios.post("http://localhost:8000/api/auth/access", null)
       dispatch(gettoken({
         ac_token:res.data.ac_token
       }))
@@ -38,41 +62,44 @@ const App = () => {
      if(token){
       const getUser = async () =>{
         dispatch(login())
-        const res = await axios.get("http://localhost:3000/api/auth/user_info",{
+        const res = await axios.get("http://localhost:8000/api/auth/user_info",{
           headers:{Authorization:token}
         })
         dispatch(getusers({
           users:res.data
         }))
       }
+      console.log("data", res.data)
+
       getUser()
      }
   }, [dispatch, token])
+
   return (
     <div>
        <Suspense fallback={<Loading/>}>
       <Routes>
+      {data  ? <>
+      <Route path="/" element={<Homescreen/>}/>
      
-      {isLoggedin ? <>
-        <Route path="/" element={<Homescreen/>}/>
-        <Route path="/portfolios" element={<ExploteScreen/>}/>
-        <Route path="/resume" element={<ResumeScreen/>}/>
-       </> 
-       :<>
-        <Route path="/" element={<Loginscreen/>}/>
-        <Route path="/register" element={<Registerscreen/>}/>
-     <Route path="/forget-pass" element={<Forgetscreen/>}/>
-     <Route path="/reset-password" element={<Resetscreen/>}/>
-       </>
-      }
-      <Route path="*" element={<Pagenotfoundscreen/>}/>
-   
+      <Route path="/portfolios" element={<Explorescreen/>}/>
+     <Route path="/profiles" element={<Profiles/>}/>
+     <Route path="/portfolio/:id" element={<PortfolioScreen/>}/>
+      {active ?  <Route path="/user/:id" element={<Userscreen/>}/> :  <Route path="/resume" element={<ResumeScreen/>}/>}
+      <Route path="/sucess" element={<Successscreen/>}/>
+     </>:<>
+     <Route path="/" element={<Loginscreen/>}/>
+   <Route path="/register" element={<Registerscreen/>}/>
+<Route path="/forget-pass" element={<Forgetscreen/>}/>
+<Route path="/reset-password" element={<Resetscreen/>}/>
+<Route path="*" element={<Pagenotfoundscreen/>}/>
+     </>}
+
     </Routes> 
     </Suspense>
-  
-   
     </div>
   )
 }
 
 export default App
+

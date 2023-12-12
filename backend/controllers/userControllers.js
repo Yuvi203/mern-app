@@ -14,8 +14,7 @@ const userController = {
          const password = req.body.password
          //check fields
          if(!name || !email ||!password){
-            return res.status(400).json({msg:"Please fill in all fields."})
-            
+            return res.status(400).json({msg:"Please fill in all fields."})      
          }
          //check email
          if(!validateEmail(email)){
@@ -95,7 +94,7 @@ const userController = {
       });
 
       // signing success
-      res.status(200).json({ msg: "Signing success" });
+      res.status(200).send(rf_token)
     } catch(err) {
       res.status(500).json({ msg: err.message });
     }

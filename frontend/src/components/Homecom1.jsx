@@ -4,6 +4,7 @@ import img from "../img/profile3.png"
 import {Bounce} from "react-reveal"
 import { Link } from 'react-router-dom'
 
+
 const Homecom1 = () => {
   return (
     <Container>

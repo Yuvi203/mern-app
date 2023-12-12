@@ -2,8 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import img from "../img/man.png"
 import {Fade} from "react-reveal"
+import axios from 'axios'
 
-const PersonalDetails = ({page, setPage}) => {
+const PersonalDetails = ({page, setPage, formdata, Setformdata}) => {
+  
   return (
     <Fade left>
     <Container>
@@ -14,17 +16,31 @@ const PersonalDetails = ({page, setPage}) => {
     <form>
     <h3>Personal details</h3>
      <div className='form-group'>
-      <input type='text' placeholder='First Name'/>
-      <input type='text' placeholder='Last Name'/>
-     </div>
+      <input type='text' placeholder='First Name' value={formdata.Firstname} onChange={(e)=>{
+       Setformdata({...formdata, Firstname:e.target.value})
+      }}/>
+      <input type='text' placeholder='Last Name' value={formdata.Lastname} onChange={(e)=>{
+       Setformdata({...formdata, Lastname:e.target.value})
+      }}/>
+     </div> 
      <div className='form-wrapper'>
-      <input placeholder='Profession...'/>
-     <textarea placeholder='About yourself...'/>
+     <input placeholder='Email...' value={formdata.Email} onChange={(e)=>{
+       Setformdata({...formdata, Email:e.target.value})
+      }}/>
+      <input placeholder='Profession...' value={formdata.Profession} onChange={(e)=>{
+       Setformdata({...formdata, Profession:e.target.value})
+      }}/>
+     <textarea placeholder='About yourself...' value={formdata.PersonalDescription} onChange={(e)=>{
+       Setformdata({...formdata, PersonalDescription:e.target.value})
+      }}/>
      <div className='form-group'>
-      <input placeholder='Age..'/>
-      <input placeholder='Nationality'/>
+      <input placeholder='Age..' value={formdata.Age} onChange={(e)=>{
+       Setformdata({...formdata, Age:e.target.value})
+      }}/>
+      <input placeholder='Mobile No' value={formdata.MobileNo} onChange={(e)=>{
+       Setformdata({...formdata, MobileNo:e.target.value})
+      }}/>
      </div>
-     <input placeholder='Languages...'/>
      </div>
      <div className='but-container'>
      <button className='btn3' onClick={()=>{

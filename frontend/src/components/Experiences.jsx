@@ -4,7 +4,7 @@ import img from "../img/man.png"
 import { Bounce } from 'react-reveal'
 
 
-const Experiences = ({page, setPage}) => {
+const Experiences = ({page, setPage, formdata, Setformdata}) => {
   const [inputelment, setInputelement] = useState([])
   const Add = (e) =>{
     e.preventDefault()
@@ -12,11 +12,20 @@ const Experiences = ({page, setPage}) => {
     <>
       <div className='form-group'>
       <input type='text' placeholder='Start date'/>
-      <input type='text' placeholder='End date'/>
+      <input type='text' placeholder='End date' onChange={(e)=>{
+         Setformdata({...formdata, CompanyEnddate:e.target.value})
+      }}/>
      </div>
      <div className='form-wrapper'>
-     <input placeholder='Roll...'/>
-      <input placeholder='Company Name...'/>
+     <input placeholder='Roll...' onChange={(e)=>{
+         Setformdata({...formdata, Roll:e.target.value})
+      }}/>
+      <input placeholder='Company Name...' onChange={(e)=>{
+         Setformdata({...formdata, Companyname:e.target.value})
+      }}/>
+      <textarea placeholder='description...' onChange={(e)=>{
+         Setformdata({...formdata, ExperienceDescription:e.target.value})
+      }}/>
      </div>
     </>])
   }
@@ -30,12 +39,23 @@ const Experiences = ({page, setPage}) => {
     <form>
     <h3>Experience details</h3>
     <div className='form-group'>
-      <input type='text' placeholder='Start date'/>
-      <input type='text' placeholder='End date'/>
+      <input  type="date" placeholder='Start date' value={formdata.CompanyStartdate} onChange={(e)=>{
+         Setformdata({...formdata, CompanyStartdate:e.target.value})
+      }}/>
+      <input type='date' placeholder='End date' value={formdata.CompanyEnddate} onChange={(e)=>{
+         Setformdata({...formdata, CompanyEnddate:e.target.value})
+      }}/>
      </div>
      <div className='form-wrapper'>
-     <input placeholder='Roll...'/>
-      <input placeholder='Company Name...'/>
+     <input placeholder='Roll...' value={formdata.Roll} onChange={(e)=>{
+         Setformdata({...formdata, Roll:e.target.value})
+      }}/>
+      <input placeholder='Company Name...' value={formdata.Companyname} onChange={(e)=>{
+         Setformdata({...formdata, Companyname:e.target.value})
+      }}/>
+      <textarea placeholder='description...' value={formdata.ExperienceDescription} onChange={(e)=>{
+         Setformdata({...formdata, ExperienceDescription:e.target.value})
+      }}/>
      </div>
      {inputelment}
      <div className='but-container'>

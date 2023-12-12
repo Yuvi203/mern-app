@@ -44,11 +44,15 @@ const LoginScreen = () => {
       });
    }
    try {
-        await axios.post("http://localhost:8000/api/auth/signing", {email, password})
-        localStorage.setItem("_appSigning", true)
-        dispatch(login())
-        navigate("/")
-      
+        await axios.post("http://localhost:8000/api/auth/signing", {email, password}).then((res)=>{
+          localStorage.setItem("data", res.data)
+          console.log(res.data)
+          localStorage.setItem("_appSigning", true)
+          dispatch(login())
+          navigate("/")
+        })
+        
+
    } catch (error) {
       toast(error.response.data.msg, {
          className: "toast",
