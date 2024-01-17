@@ -19,7 +19,42 @@ const GlobalStyle = createGlobalStyle`
     --scrollbar-bg-color: #383838;
     --scrollbar-thump-color: #6b6b6b;
     --scrollbar-track-color: #383838;
-
+}
+.light-theme{
+    --primary-color: #007bff;
+    --primary-color-light: #057FFF;
+    --secondary-color: #ff7675;
+    --background-dark-color: #F1F1F1;
+    --background-dark-grey: #e4e4e4;
+    --border-color: #cbced8;
+    --background-light-color: #F1F1F1;
+    --background-light-color-2: rgba(3,127,255,.3);
+    --white-color: #151515;
+    --font-light-color: #313131;
+    --font-dark-color: #313131;
+    --font-dark-color-2: #151515;
+    --sidebar-dark-color: #E4E4E4;
+    --scrollbar-bg-color: #383838;
+    --scrollbar-thump-color: #6b6b6b;
+    --scrollbar-track-color: #383838;
+}
+.dark-theme{
+    --primary-color: #007bff;
+    --primary-color-light: #057FFF;
+    --secondary-color: #6c757d;
+    --background-dark-color: #10121A;
+    --background-dark-grey: #191D2B;
+    --border-color: #2e344e;
+    --background-light-color: #F1F1F1;
+    --background-light-color-2: rgba(3,127,255,.3);
+    --white-color: #FFF;
+    --font-light-color: #a4acc4;
+    --font-dark-color: #313131;
+    --font-dark-color-2: #151515;
+    --sidebar-dark-color: #191D2B;
+    --scrollbar-bg-color: #383838;
+    --scrollbar-thump-color: #6b6b6b;
+    --scrollbar-track-color: #383838;
 }
 *{
     margin: 0;
@@ -155,6 +190,9 @@ a:hover {
   height: 49px;
   font-size: 16px;
   cursor:pointer;
+  &:hover{
+    background: #5d33e6;
+  }
 }
 .wrapper{
     padding: 20px;
@@ -234,7 +272,7 @@ a:hover {
        }
     }
     input::-webkit-input-placeholder {
-      font-size: 14px;
+      font-size: 14px; 
       color: gray;
       font-family: arial; }
    .but-container{
@@ -243,7 +281,7 @@ a:hover {
     justify-content:center;
    }
    .primary{
-  background-color: transparent;
+background-color:transparent;
 	border: 1px solid #03BFCB;
 	border-radius: 3px;
   color: #02899C;
@@ -257,6 +295,39 @@ a:hover {
   background-color: #03BFCB;
    }
     }
+.menu{
+  position:absolute;
+  right:5%;
+  top:3%;
+  z-index:15;
+  display:none;
+  svg{
+    font-size: 3rem;
+  }
+}    
+.nav-toggle{
+  transform:translateX(0);
+  z-index:20;
+}
+@media screen and (max-width:1200px) {
+  .menu{
+    display:block;
+  }
+}
+.lines{
+  position:absolute;
+  min-height:100%;
+  width:100%;
+  display:flex;
+  justify-content:space-evenly;
+  opacity:0.4;
+  z-index:-1;
+  .line-1, .line-2, .line-3, .line-4{
+      width: 1px;
+      min-height: 100vh;
+      background-color: var(--border-color);
+    }
+}
 `
 
 export default GlobalStyle

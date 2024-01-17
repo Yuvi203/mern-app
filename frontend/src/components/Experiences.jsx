@@ -1,48 +1,52 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import img from "../img/man.png"
-import { Bounce } from 'react-reveal'
+import img from "../img/man11.png"
+import { Bounce, Rotate } from 'react-reveal'
 
 
 const Experiences = ({page, setPage, formdata, Setformdata}) => {
   const [inputelment, setInputelement] = useState([])
+  const [show, Setshow] = useState(true)
   const Add = (e) =>{
     e.preventDefault()
     setInputelement([...inputelment,
     <>
       <div className='form-group'>
-      <input type='text' placeholder='Start date'/>
-      <input type='text' placeholder='End date' onChange={(e)=>{
-         Setformdata({...formdata, CompanyEnddate:e.target.value})
+      <input type='text' placeholder='Start date' value={formdata.CompanyStartdate2} onChange={(e)=>{
+         Setformdata({...formdata, CompanyStartdate2:e.target.value})
+      }}/>
+      <input type='text' placeholder='End date' value={formdata.CompanyEnddate2} onChange={(e)=>{
+         Setformdata({...formdata, CompanyEnddate2:e.target.value})
       }}/>
      </div>
      <div className='form-wrapper'>
-     <input placeholder='Roll...' onChange={(e)=>{
-         Setformdata({...formdata, Roll:e.target.value})
+     <input placeholder='Roll...' value={formdata.Roll2} onChange={(e)=>{
+         Setformdata({...formdata, Roll2:e.target.value})
       }}/>
-      <input placeholder='Company Name...' onChange={(e)=>{
-         Setformdata({...formdata, Companyname:e.target.value})
+      <input placeholder='Company Name...' value={formdata.Companyname2} onChange={(e)=>{
+         Setformdata({...formdata, Companyname2:e.target.value})
       }}/>
-      <textarea placeholder='description...' onChange={(e)=>{
-         Setformdata({...formdata, ExperienceDescription:e.target.value})
+      <textarea placeholder='description...' value={formdata.ExperienceDescription2} onChange={(e)=>{
+         Setformdata({...formdata, ExperienceDescription2:e.target.value})
       }}/>
      </div>
     </>])
+      Setshow(false)
   }
   return (
-    <Bounce right>
+    <Rotate left>
     <Container>
     <div className='wrapper'>
       <div className='img-con'>
-         <img src={img} alt=""/>
+         <img src={img} alt="" style={{width:"80%"}}/>
       </div>
     <form>
     <h3>Experience details</h3>
     <div className='form-group'>
-      <input  type="date" placeholder='Start date' value={formdata.CompanyStartdate} onChange={(e)=>{
+      <input  type="txt" placeholder='Start year' value={formdata.CompanyStartdate} onChange={(e)=>{
          Setformdata({...formdata, CompanyStartdate:e.target.value})
       }}/>
-      <input type='date' placeholder='End date' value={formdata.CompanyEnddate} onChange={(e)=>{
+      <input type='txt' placeholder='End year' value={formdata.CompanyEnddate} onChange={(e)=>{
          Setformdata({...formdata, CompanyEnddate:e.target.value})
       }}/>
      </div>
@@ -53,13 +57,13 @@ const Experiences = ({page, setPage, formdata, Setformdata}) => {
       <input placeholder='Company Name...' value={formdata.Companyname} onChange={(e)=>{
          Setformdata({...formdata, Companyname:e.target.value})
       }}/>
-      <textarea placeholder='description...' value={formdata.ExperienceDescription} onChange={(e)=>{
+      <textarea placeholder='Tell About Your Working Experience...' value={formdata.ExperienceDescription} onChange={(e)=>{
          Setformdata({...formdata, ExperienceDescription:e.target.value})
       }}/>
      </div>
      {inputelment}
      <div className='but-container'>
-     <button className='btn3' onClick={Add}>Add</button>
+     {show ? <button className='btn3' onClick={Add}>Add</button> : <></>}
      </div>
      <div className='but-container'>
      <button className='btn3' onClick={()=>{
@@ -72,7 +76,7 @@ const Experiences = ({page, setPage, formdata, Setformdata}) => {
    </form>
     </div>
   </Container>
-  </Bounce>
+  </Rotate>
   )
 }
 

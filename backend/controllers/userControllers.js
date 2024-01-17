@@ -43,10 +43,6 @@ const userController = {
          sendmail.sendEmailRegsister(email, url, "Verify your email")
        
          await User.create(newUser)
-       
-
-    
-
        // registered succesfully
          res.status(200).json({msg:"Welcome! Please check your email."})
       } catch (error) {

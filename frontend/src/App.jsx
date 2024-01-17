@@ -6,7 +6,7 @@ import {gettoken, getusers, login} from "./redux/slices/AuthSlice"
 import { lazy, Suspense } from "react"
 import Loading from "./components/Loading"
 import { SelectisUser, getid, getusersall } from "./redux/slices/ResumeSlice"
-
+import Sidebar  from "./components/Sidebar"
 
 const Loginscreen = lazy(()=> import("./screens/LoginScreen"))
 const Registerscreen = lazy(()=> import("./screens/RegisterScreen"))
@@ -33,18 +33,18 @@ const App = () => {
   const active = localStorage.getItem("active")
   const user_id = localStorage.getItem("id")
   
-  const {users, users_id} = useSelector((state)=> state.resume)
+  const {users} = useSelector((state)=> state.resume)
+  const {id} = useParams()
 
   useEffect(()=>{
     const allusers = axios.get("http://localhost:8000/api/getdetailsall").then((res)=>{
       dispatch(getusersall(res.data))
     })
-  }, [])
-  
+  }, [dispatch])
 
   useEffect(()=>{
    if(active){  
-    navigate(`/user/${user_id}`)
+    navigate(`/user/${user_id}`) 
     console.log(user_id)
    }
    else{
@@ -87,20 +87,18 @@ const App = () => {
       <Routes>
       {data  ? <>
       <Route path="/" element={<Homescreen/>}/>
-     
       <Route path="/portfolios" element={<Explorescreen/>}/>
-     <Route path="/profiles" element={<Profiles/>}/>
-     <Route path="/portfolio/:id" element={<PortfolioScreen/>}/>
-      {active ?  <Route path="/user/:id" element={<Userscreen/>}/> :  <Route path="/resume" element={<ResumeScreen/>}/>}
+      <Route path="/profiles" element={<Profiles/>}/>
+      <Route path="/portfolio/:id" element={<PortfolioScreen/>}/>
       <Route path="/sucess" element={<Successscreen/>}/>
+      {active ?  <Route path="/user/:id" element={<Userscreen/>}/> :  <Route path="/resume" element={<ResumeScreen/>}/>}
      </>:<>
-     <Route path="/" element={<Loginscreen/>}/>
-   <Route path="/register" element={<Registerscreen/>}/>
-<Route path="/forget-pass" element={<Forgetscreen/>}/>
-<Route path="/reset-password" element={<Resetscreen/>}/>
-<Route path="*" element={<Pagenotfoundscreen/>}/>
+      <Route path="/" element={<Loginscreen/>}/>
+      <Route path="/register" element={<Registerscreen/>}/>
+      <Route path="/forget-pass" element={<Forgetscreen/>}/>
+      <Route path="/reset-password" element={<Resetscreen/>}/>
+      <Route path="*" element={<Pagenotfoundscreen/>}/>
      </>}
-
     </Routes> 
     </Suspense>
     </div>

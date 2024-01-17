@@ -1,8 +1,10 @@
 const {Schema, model} = require("mongoose")
 
-
-
 const portfolioSchema = Schema({
+        Profile:{
+            type: String,
+            required:true
+        },
         Firstname:{
             type:String,
             required:true
@@ -19,7 +21,7 @@ const portfolioSchema = Schema({
           },
           Profession:{
               type:String,
-              required:true
+             required:true
           },
           PersonalDescription:{
             type:String,
@@ -48,11 +50,26 @@ const portfolioSchema = Schema({
     },
     University:{
         type:String,
-        required:true
+       required:true
     },
     EducationDescription:{
         type:String,
         required:true
+    },
+    CollegeStartdate2:{
+        type:String,
+    },
+    CollegeEnddate2:{
+        type:String,
+    },
+    Degree2:{
+        type:String,
+    },
+    University2:{
+        type:String,
+    },
+    EducationDescription2:{
+        type:String,
     },
     Skill:{
         type:String,
@@ -64,50 +81,58 @@ const portfolioSchema = Schema({
     },
     Skill3:{
         type:String,
-        required:true
     },
     Skill4:{
         type:String,
-        required:true
     },
-    AdditionalSkills:{
-       type: [],
-    },
-    Percentage:{
+    Skill5:{
         type:String,
-        required:true
+       
     },
-    Percentage2:{
+    Skill6:{
         type:String,
-        required:true
     },
-    Percentage3:{
+    Skill7:{
         type:String,
-        required:true
     },
-    Percentage4:{
+    Skill8:{
         type:String,
-        required:true
+    },
+    Skill9:{
+        type:String
+    },
+    Skill10:{
+        type:String
     },
     CompanyStartdate:{
         type:String,
-        required:true
     },
     CompanyEnddate:{
         type:String,
-        required:true
     },
     Roll:{
         type:String,
-        required:true
     },
     Companyname:{
         type:String,
-        required:true
     },
     ExperienceDescription:{
         type:String,
-        required:true
+    },
+    CompanyStartdate2:{
+        type:String,
+    },
+    CompanyEnddate2:{
+        type:String,
+    },
+    Roll2:{
+        type:String,
+    },
+    Companyname2:{
+        type:String,
+    },
+    ExperienceDescription2:{
+        type:String,
     },
     Title:{
         type:String,
@@ -115,13 +140,42 @@ const portfolioSchema = Schema({
     },
     Link:{
         type:String,
-        required:true
+       required:true
     },
     Description:{
         type:String,
         required:true
+    },
+    Title2:{
+        type:String,
+    },
+    Link2:{
+        type:String,
+    },
+    Description2:{
+        type:String,
+    },
+    Address1:{
+        type:String
+    },
+    Address2:{
+        type:String
+    },
+    Location:{
+        type:String
+    },
+    Languages:{
+        type:String
+    },
+    Sociallink1:{
+        type:String,
+    },
+    Sociallink2:{
+        type:String,
+    },
+    Sociallink3:{
+        type:String
     }
-    
 })
 
 const Portfolio = model("portfolios", portfolioSchema)

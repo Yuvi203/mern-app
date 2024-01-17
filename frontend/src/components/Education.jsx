@@ -1,35 +1,37 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import img from "../img/man.png"
+import img from "../img/man10.png"
 import {Fade, Flip} from "react-reveal"
 
 const Education = ({page, setPage, formdata, Setformdata}) => {
   const [inputelment, setInputelement] = useState([])
+  const [show, Setshow] = useState(true)
 
   const Add = (e) =>{
     e.preventDefault()
     setInputelement([...inputelment,
     <>
       <div className='form-group'>
-      <input type='text' placeholder='Start date'  onChange={(e)=>{
-        Setformdata({...formdata, CollegeStartdate:e.target.value})
+      <input type='text' placeholder='Start date' value={formdata.CollegeStartdate2}  onChange={(e)=>{
+        Setformdata({...formdata, CollegeStartdate2:e.target.value})
       }}/>
-      <input type='text' placeholder='End date'  onChange={(e)=>{
-        Setformdata({...formdata, CollegeEnddate:e.target.value})
+      <input type='text' placeholder='End date' value={formdata.CollegeEnddate2}  onChange={(e)=>{
+        Setformdata({...formdata, CollegeEnddate2:e.target.value})
       }}/>
      </div>
      <div className='form-wrapper'>
-     <input placeholder='degree...' value={formdata.Degree}  onChange={(e)=>{
-        Setformdata({...formdata, Degree:e.target.value})
+     <input placeholder='degree...' value={formdata.Degree2}  onChange={(e)=>{
+        Setformdata({...formdata, Degree2:e.target.value})
       }}/>
-      <input placeholder='University...' value={formdata.University}  onChange={(e)=>{
-        Setformdata({...formdata, University:e.target.value})
+      <input placeholder='University...' value={formdata.University2}  onChange={(e)=>{
+        Setformdata({...formdata, University2:e.target.value})
       }}/>
-      <textarea placeholder='description...' value={formdata.Description}  onChange={(e)=>{
-        Setformdata({...formdata, Description:e.target.value})
+      <textarea placeholder='description...' value={formdata.Description2}  onChange={(e)=>{
+        Setformdata({...formdata, Description2:e.target.value})
       }}/>
      </div>
     </>])
+    Setshow(false)
   }
 
   return (
@@ -42,10 +44,10 @@ const Education = ({page, setPage, formdata, Setformdata}) => {
     <form>
     <h3>Educational details</h3>
       <div className='form-group'>
-      <input type='date' placeholder='Start date' value={formdata.CollegeStartdate}  onChange={(e)=>{
+      <input type='txt' placeholder='Start year' value={formdata.CollegeStartdate}  onChange={(e)=>{
         Setformdata({...formdata, CollegeStartdate:e.target.value})
       }}/>
-      <input type='date' placeholder='End date' value={formdata.CollegeEnddate} onChange={(e)=>{
+      <input type='txt' placeholder='End year' value={formdata.CollegeEnddate} onChange={(e)=>{
         Setformdata({...formdata, CollegeEnddate:e.target.value})
       }}/> 
      </div>
@@ -53,16 +55,16 @@ const Education = ({page, setPage, formdata, Setformdata}) => {
      <input placeholder='Degree...' value={formdata.Degree}  onChange={(e)=>{
         Setformdata({...formdata, Degree:e.target.value})
       }}/>
-      <input placeholder='University...' value={formdata.University}  onChange={(e)=>{
+      <input placeholder='University Name...' value={formdata.University}  onChange={(e)=>{
         Setformdata({...formdata, University:e.target.value})
       }}/>
-      <textarea placeholder='description...' value={formdata.EducationDescription}  onChange={(e)=>{
+      <textarea placeholder='Tell About Your College Experience' value={formdata.EducationDescription}  onChange={(e)=>{
         Setformdata({...formdata, EducationDescription:e.target.value})
       }}/>
      </div>
      {inputelment}
      <div className='but-container'>
-     <button className='btn3' onClick={Add}>Add</button>
+      {show ? <button className='btn3' onClick={Add}>Add</button> : <></>}
      </div>
      <div className='but-container'>
      <button className='btn3' onClick={()=>{

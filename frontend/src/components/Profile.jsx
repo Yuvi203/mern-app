@@ -1,26 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
+import {Link} from "react-router-dom"
 
 const Profile = ({data}) => {
   return (
       <Container>
-       <img src="https://randomuser.me/api/portraits/women/79.jpg" alt="user"/>
+       <img src={data.Profile} alt="user"/>
        <h3>{data.Firstname}</h3>
 	   <h6>{data.Age}</h6>
-       <p>{data.Profession}<br/> carrer</p>
+       <p>{data.Profession}<br/> </p>
        <div className='buttons'>
          <button className='primary'>Message</button>
-         <button className='primary'>Portfolio</button>
+         <Link to={`/portfolio/${data._id}`}><button className='primary'>Portfolio</button></Link>
        </div>
-       {/* <div className='skills'>
-         <h6>Skills</h6>
-         <ul>
-			<li>{skill1}</li>
-			<li>{skill2}</li>
-			<li>{skill3}</li>
-			<li>{skill4}</li>
-         </ul>
-       </div> */}
       </Container>
   )
 }
@@ -36,6 +28,7 @@ const Container = styled.div`
 	max-width: 100%;
 	text-align: center;
     padding-top:30px;
+    padding-bottom:30px;
     h3{
         margin:10px 0;
     }
@@ -51,6 +44,8 @@ const Container = styled.div`
         border:1px solid #03BFCB;
         border-radius:50%;
         padding:7px;
+        object-fit:cover;
+        width:50%;
     }
     .skills{
     background-color: #1F1A36;

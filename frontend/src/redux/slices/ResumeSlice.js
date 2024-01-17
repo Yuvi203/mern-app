@@ -27,7 +27,7 @@ const ResumeSlice = createSlice({
 })
 
 export default ResumeSlice.reducer
-export  const {user, getid, getusers, getusersall} = ResumeSlice.actions
+export  const {user, getid, getusers, getusersall,} = ResumeSlice.actions
 
 export const SelectisUser = (state) =>  state.resume.isUser 
 export const Selectid = (state) => state.resume.user_id

@@ -9,6 +9,9 @@ const createToken = {
     },
     access: (payload) =>{
       return jwt.sign(payload, process.env.ACCESS_TOKEN, {expiresIn:"15m"})
+    },
+    resume:(payload) =>{
+      return jwt.sign(payload, process.env.RESUME_TOKEN, {expiresIn:"40m"})
     }
 }
 

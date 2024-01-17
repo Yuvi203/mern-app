@@ -11,52 +11,20 @@ import { isEmpty } from '../helpers/validate'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { getusersall } from '../redux/slices/ResumeSlice'
-
-
-
-
-const initialState = {
-    Firstname:"",
-    Lastname:"",
-    Email:"",
-    Profession:"",
-    PersonalDescription:"",
-    Age:"",
-    MobileNo:"",
-    CollegeStartdate:"",
-    CollegeEnddate:"",
-    Degree:"",
-    University:"",
-   EducationDescription:"",
-    Skill:"",
-    Skill2:"",
-    Skill3:"",
-    Skill4:"",
-    AdditionalSkills:[],
-    Percentage:"",
-    Percentage2:"",
-    Percentage3:"",
-    Percentage4:"",
-    CompanyStartdate:"",
-    CompanyEnddate:"",
-    Roll:"",
-    Companyname:"",
-    ExperienceDescription:"",
-    Title:"",
-    Link:"",
-    Description:"",
-}
+import { initialState } from '../helpers/initialState'
+import Addition from '../components/Addition'
 
 const ResumeScreen = () => {
   const [page, setPage] = useState(0)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [formdata, Setformdata] = useState(initialState)
-  const [sucess, setSucess] = useState(false)
-  const {Firstname, Lastname, Email, Profession, Age, MobileNo, PersonalDescription, CollegeStartdate, CollegeEnddate, Degree, University, EducationDescription, Skill, Skill2, Skill3, Skill4, AdditionalSkills, Percentage, Percentage2, Percentage3, Percentage4, CompanyStartdate, CompanyEnddate, Roll, Companyname, ExperienceDescription, Title, Link, Description} = formdata
+  const [Profile, SetProfile] = useState("")
+
+
+
+  const {Firstname, Lastname, Email, Profession, Age, MobileNo, PersonalDescription, CollegeStartdate, CollegeEnddate, Degree, University, EducationDescription, CollegeStartdate2, CollegeEnddate2, Degree2, University2, EducationDescription2, Skill, Skill2, Skill3, Skill4, Skill5, Skill6, Skill7, Skill8, Skill9, Skill10, CompanyStartdate, CompanyEnddate, Roll, Companyname, ExperienceDescription, CompanyStartdate2, CompanyEnddate2, Roll2, Companyname2, ExperienceDescription2, Title, Link, Description, Title2, Link2, Description2, Address1, Address2, Location, Languages, Sociallink1, Sociallink2, Sociallink3} = formdata
  
-
-
   const handleSubmit = async (e) =>{
     e.preventDefault()
     if(isEmpty(formdata)){
@@ -66,9 +34,9 @@ const ResumeScreen = () => {
       });
     }
     try {
-      await axios.post("http://localhost:8000/api/resume", {Firstname, Lastname, Email, Profession, Age, MobileNo, PersonalDescription, CollegeStartdate, CollegeEnddate, Degree, University, EducationDescription, Skill, Skill2, Skill3, Skill4,AdditionalSkills, Percentage,Percentage2, Percentage3, Percentage4, CompanyStartdate, CompanyEnddate, Roll, Companyname, ExperienceDescription, Title, Link, Description})
+      await axios.post("http://localhost:8000/api/resume", {Profile, Firstname, Lastname, Email, Profession, Age, MobileNo, PersonalDescription, CollegeStartdate, CollegeEnddate, Degree, University, EducationDescription, CollegeStartdate2, CollegeEnddate2, Degree2, University2,EducationDescription2, Skill,Skill2, Skill3, Skill4, Skill5, Skill6, Skill7, Skill8, Skill9, Skill10, CompanyStartdate, CompanyEnddate, Roll, Companyname, ExperienceDescription, CompanyStartdate2, CompanyEnddate2, Roll2, Companyname2, ExperienceDescription2, Title, Link, Description, Title2, Link2, Description2, Address1, Address2, Location, Languages, Sociallink1, Sociallink2, Sociallink3})
      .then((res)=>{
-      localStorage.setItem("active", res.data.activation_token)
+        localStorage.setItem("active", res.data.activation_token)
       localStorage.setItem("id", res.data.id)
       getUsers()
       navigate("/sucess")
@@ -86,9 +54,10 @@ const ResumeScreen = () => {
       dispatch(getusersall(res.data))
     })
   }
+
   const PageDisplay = () =>{
     if(page === 0){
-      return <PersonalDetails page={page} setPage={setPage} formdata={formdata} Setformdata={Setformdata}/>
+      return <PersonalDetails page={page} setPage={setPage} formdata={formdata} Setformdata={Setformdata} SetProfile={SetProfile}/>
     }
     else if(page === 1){
       return <Education  page={page} setPage={setPage} formdata={formdata} Setformdata={Setformdata}/>
@@ -100,33 +69,17 @@ const ResumeScreen = () => {
       return <Experiences  page={page} setPage={setPage} formdata={formdata} Setformdata={Setformdata}/>
     }
     else if(page === 4){
-      return <Project  page={page} setPage={setPage} formdata={formdata} Setformdata={Setformdata} handleSubmit={handleSubmit}/>
+      return <Project  page={page} setPage={setPage} formdata={formdata} Setformdata={Setformdata}/>
     }
-
+    else if(page === 5){
+     return <Addition setPage={setPage} formdata={formdata} Setformdata={Setformdata} handleSubmit={handleSubmit} />
+    }
   }
+
   return (
     <div>
         <ToastContainer/>
      {PageDisplay()}
-{/* {titles[page]}
-
-     <button 
- 
-     onClick={()=>{
-      setPage((curr) => curr-1)
-     }}
-     >prev</button>
-     <button 
-     onClick={(e)=>{
-       if(page === titles.length-1){
-        alert("submitted")
-        handleSubmit(e)
-        console.log(formdata)
-       } else{
-        setPage((curr)=> curr+1)
-       }
-     }}
-     >{page === titles.length - 1? "Submit": "Next"}</button> */}
     </div>
   )
 }
