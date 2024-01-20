@@ -13,7 +13,7 @@ const Resumescreen = () => {
   return (
      <Container>
        <Title title={"My Skills"}/>
-       <div className='skills'>
+       <div className='skills'> 
         <li>{users.Skill}</li>
           <li>{users.Skill2}</li>
           <li>{users.Skill3}</li>
@@ -26,19 +26,20 @@ const Resumescreen = () => {
           <li>{users.Skill10}</li>
        </div>
        <Title title={"Resume"}/>
-       <div className='small-title'>
+       {users.CompanyStartdate || users.CompanyStartdate2 ?    <div className='small-title'>
        <SmallTitle icon={icon} title={"Working Experience"}/>
-       </div>
+       </div> : <></>}
+    
        <div className='resume-content'>
-         <ResumeItem year={users.CompanyStartdate} year2={users.CompanyEnddate} title={users.Roll} text={users.Companyname} description={users.ExperienceDescription}/>
-         <ResumeItem year={users.CompanyStartdate2} year2={users.CompanyEnddate2} title={users.Roll2} text={users.Companyname2} description={users.ExperienceDescription2}/>
+        {users.CompanyStartdate ? <ResumeItem year={users.CompanyStartdate} year2={users.CompanyEnddate} title={users.Roll} text={users.Companyname} description={users.ExperienceDescription}/> :<></>}
+        {users.CompanyStartdate2 ?  <ResumeItem year={users.CompanyStartdate2} year2={users.CompanyEnddate2} title={users.Roll2} text={users.Companyname2} description={users.ExperienceDescription2}/> :<></>}
        </div>
-      <div className='small-title' style={{marginTop:"4rem"}}>
+       <div className='small-title' style={{marginTop:"4rem"}}>
         <SmallTitle icon={icon2} title={"Educatonal Qualification"}/>
       </div>
       <div className='resume-content'>
         <ResumeItem year={users.CollegeStartdate} year2={users.CollegeEnddate} title={users.Degree} text={users.University} description={users.EducationDescription}/>
-        <ResumeItem year={users.CollegeStartdate2} year2={users.CollegeEnddate2} title={users.Degree2} text={users.University2} description={users.EducationDescription2}/>
+        {users.CollegeStartdate2 ? <ResumeItem year={users.CollegeStartdate2} year2={users.CollegeEnddate2} title={users.Degree2} text={users.University2} description={users.EducationDescription2}/> :<></>}
       </div>
      </Container>
   )

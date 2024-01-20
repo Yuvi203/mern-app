@@ -1,6 +1,6 @@
 import {Router, Route, Routes, useNavigate, Navigate, useParams} from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import {gettoken, getusers, login} from "./redux/slices/AuthSlice"
 import { lazy, Suspense } from "react"
@@ -32,9 +32,9 @@ const App = () => {
   const data = localStorage.getItem("data")
   const active = localStorage.getItem("active")
   const user_id = localStorage.getItem("id")
-  
-  const {users} = useSelector((state)=> state.resume)
+  const {ResumeLink} = useSelector((state)=> state.resume)
   const {id} = useParams()
+  const [Fileurl, SetFileUrl] = useState("")
 
   useEffect(()=>{
     const allusers = axios.get("http://localhost:8000/api/getdetailsall").then((res)=>{
@@ -89,9 +89,9 @@ const App = () => {
       <Route path="/" element={<Homescreen/>}/>
       <Route path="/portfolios" element={<Explorescreen/>}/>
       <Route path="/profiles" element={<Profiles/>}/>
-      <Route path="/portfolio/:id" element={<PortfolioScreen/>}/>
+      <Route path="/portfolio/:id" element={<PortfolioScreen Fileurl={Fileurl} SetFileUrl={SetFileUrl}/>}/>
       <Route path="/sucess" element={<Successscreen/>}/>
-      {active ?  <Route path="/user/:id" element={<Userscreen/>}/> :  <Route path="/resume" element={<ResumeScreen/>}/>}
+      {active ?  <Route path="/user/:id" element={<Userscreen/>}/> :  <Route path="/resume" element={<ResumeScreen Fileurl={Fileurl} SetFileUrl={SetFileUrl}/>}/>}
      </>:<>
       <Route path="/" element={<Loginscreen/>}/>
       <Route path="/register" element={<Registerscreen/>}/>

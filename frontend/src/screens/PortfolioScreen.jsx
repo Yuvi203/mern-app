@@ -15,7 +15,7 @@ import { BsBrightnessHigh } from "react-icons/bs";
 import Switch from "@material-ui/core/Switch"
 
 
-const PortfolioScreen = () => {
+const PortfolioScreen = ({Fileurl, SetFileUrl}) => {
     const {id} = useParams()
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(true)
@@ -37,7 +37,7 @@ const PortfolioScreen = () => {
       {loading ? <Loading/> :
        <>
           <HomeScreen/>
-          <AboutScreen/>
+          <AboutScreen Fileurl={Fileurl}/>
           <Resumescreen/>
           <ContactScreen/>
       </>}

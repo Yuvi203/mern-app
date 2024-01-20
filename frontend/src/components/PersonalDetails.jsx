@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import {Fade} from "react-reveal"
-import axios from 'axios'
-
+import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
+import {storage} from "../helpers/firebase"
 
 const PersonalDetails = ({page, setPage, formdata, Setformdata, SetProfile}) => {
 
@@ -10,15 +10,14 @@ const PersonalDetails = ({page, setPage, formdata, Setformdata, SetProfile}) => 
 
   const handleChange = (e) =>{
      const file = e.target.files[0]
-     const formData = new FormData()
-     formData.append('file', file)
-     formData.append("upload_preset", import.meta.env.REACT_IMAGE_KEY)
-     axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.REACT_IMAGE_NAME}/image/upload`, formData)
-     .then((res)=>{
-      setImage(res.data.secure_url)
-      SetProfile(res.data.secure_url)
+     const fileRef = ref(storage, `images/${file.name}`)
+     uploadBytes(fileRef, file).then((snapshot)=>{
+       getDownloadURL(snapshot.ref).then((url)=>{
+         console.log(url)
+          SetProfile(url)
+          setImage(url)
+       })
      })
-     .catch(err => console.log(err))
   }
   
   return (

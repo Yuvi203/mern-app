@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Sidebar from '../../components/Sidebar'
 import styled from 'styled-components'
@@ -6,7 +6,7 @@ import Title from '../../components/Title'
 import ImageSection from '../../components/ImageSection'
 
 const AboutScreen = () => {
-  const {users} = useSelector((state)=> state.resume)
+ 
   return (
      <Container>
         <Title title={"About Me"} span={"About Me"} />

@@ -1,16 +1,18 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { initialState } from '../helpers/initialState';
 
 const ImageSection = () => {
-    const {users} = useSelector((state)=> state.resume)
+    const {users,ResumeLink} = useSelector((state)=> state.resume)
+  
   return (
      <Container>
           <div className='left-content'>
            <img src={users.Profile} alt=''/>
           </div>
           <div className='right-content'>
-            <h4>I am <span>{users.Firstname}</span></h4>
+            <h4>I am <span>{users.Firstname} {users.Lastname}</span></h4>
             <p className='paragraph'>
               {users.PersonalDescription}
             </p>
@@ -20,19 +22,23 @@ const ImageSection = () => {
                  <p>Profession</p>
                  <p>Age</p>
                  <p>Nationality</p>
-                 <p>Languages</p>
-                 <p>Location</p>
+                 {users.Languages ?   <p>Languages</p> :<></>}
+                 {users.Location ?  <p>Location</p> :<></>}
                </div>
                <div className='info'>
                <p>: {users.Firstname} {users.Lastname}</p>
                <p>: {users.Profession}</p>
                <p>: {users.Age}</p>
                <p>: India</p>
-               <p>: {users.Languages}</p>
-               <p>: {users.Location}</p>
+               {users.Languages ?  <p>: {users.Languages}</p> :<></>}
+               {users.Location ? <p>: {users.Location}</p> :<></>}
                </div>
             </div>
+           <a href={users.Fileurl}>
+           <button>Download CV</button>
+           </a>
           </div>
+    
      </Container>
   )
 }
@@ -83,5 +89,19 @@ display:flex;
            }
             }
     }
+}
+button{
+    margin-top:1rem;
+  margin-right:1rem;
+  border:0;
+  background: #7f5feb;
+  color: #dfdeee;
+  width: 140px;
+  height: 49px;
+  font-size: 16px;
+  cursor:pointer;
+  &:hover{
+    background: #5d33e6;
+  }
 }
 `

@@ -42,7 +42,7 @@ const ContactScreen = () => {
     <div className='right-content'>
      <ContactItem title={"Phone"} icon={phone} phone={users.MobileNo}/>
      <ContactItem title={"Phone"} icon={email} email={users.Email}/>
-     <ContactItem title={"Address"} icon={location} address1={users.Address1} address2={users.Address2}/>
+     {users.Address1 || users.Address2 ?    <ContactItem title={"Address"} icon={location} address1={users.Address1} address2={users.Address2}/> :<></>}
     </div>
     </div>
     </Container>

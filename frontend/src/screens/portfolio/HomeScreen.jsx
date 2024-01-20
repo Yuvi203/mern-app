@@ -15,24 +15,20 @@ const HomeScreen = () => {
     <>
     <Container>        
          <div className='typography'>
-         <h1>Hi, I'm <span>{users.Firstname}</span></h1>
+         <h1>Hi, I'm <span>{users.Firstname} {users.Lastname}</span></h1>
          <p>{users.PersonalDescription}</p>
          <div className='icons'>
-         <a href={users.Socialkink1} className="icon i-facebook">
+         {users.Sociallink1 ?   <a href={users.Sociallink1} className="icon i-facebook">
             <FaLinkedin/>
-         </a>
-         <a href={users.Sociallink2} className="icon i-github">
+         </a> :<></>}
+         {users.Sociallink2 ?   <a href={users.Sociallink2} className="icon i-github">
             <FaGithub/>
-         </a>
-         <a href={users.Sociallink3} className="icon i-youtube">
+         </a> :<></>}
+         {users.Sociallink3 ?   <a href={users.Sociallink3} className="icon i-youtube">
             <FaFacebookSquare/>
-         </a>
+         </a> : <></>}
          </div>
       </div>
-         <div className='sayhello'>
-           <FiMessageCircle/>
-           <h1>Say Hello</h1>
-         </div>
     </Container>
     </>
   )

@@ -14,15 +14,14 @@ import { getusersall } from '../redux/slices/ResumeSlice'
 import { initialState } from '../helpers/initialState'
 import Addition from '../components/Addition'
 
-const ResumeScreen = () => {
+const ResumeScreen = ({Fileurl,SetFileUrl}) => {
   const [page, setPage] = useState(0)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [formdata, Setformdata] = useState(initialState)
   const [Profile, SetProfile] = useState("")
-
-
-
+  const {ResumeLink} = useSelector((state)=> state.resume)
+ 
   const {Firstname, Lastname, Email, Profession, Age, MobileNo, PersonalDescription, CollegeStartdate, CollegeEnddate, Degree, University, EducationDescription, CollegeStartdate2, CollegeEnddate2, Degree2, University2, EducationDescription2, Skill, Skill2, Skill3, Skill4, Skill5, Skill6, Skill7, Skill8, Skill9, Skill10, CompanyStartdate, CompanyEnddate, Roll, Companyname, ExperienceDescription, CompanyStartdate2, CompanyEnddate2, Roll2, Companyname2, ExperienceDescription2, Title, Link, Description, Title2, Link2, Description2, Address1, Address2, Location, Languages, Sociallink1, Sociallink2, Sociallink3} = formdata
  
   const handleSubmit = async (e) =>{
@@ -34,7 +33,7 @@ const ResumeScreen = () => {
       });
     }
     try {
-      await axios.post("http://localhost:8000/api/resume", {Profile, Firstname, Lastname, Email, Profession, Age, MobileNo, PersonalDescription, CollegeStartdate, CollegeEnddate, Degree, University, EducationDescription, CollegeStartdate2, CollegeEnddate2, Degree2, University2,EducationDescription2, Skill,Skill2, Skill3, Skill4, Skill5, Skill6, Skill7, Skill8, Skill9, Skill10, CompanyStartdate, CompanyEnddate, Roll, Companyname, ExperienceDescription, CompanyStartdate2, CompanyEnddate2, Roll2, Companyname2, ExperienceDescription2, Title, Link, Description, Title2, Link2, Description2, Address1, Address2, Location, Languages, Sociallink1, Sociallink2, Sociallink3})
+      await axios.post("http://localhost:8000/api/resume", {Profile, Firstname, Lastname, Email, Profession, Age, MobileNo, PersonalDescription, CollegeStartdate, CollegeEnddate, Degree, University, EducationDescription, CollegeStartdate2, CollegeEnddate2, Degree2, University2,EducationDescription2, Skill,Skill2, Skill3, Skill4, Skill5, Skill6, Skill7, Skill8, Skill9, Skill10, CompanyStartdate, CompanyEnddate, Roll, Companyname, ExperienceDescription, CompanyStartdate2, CompanyEnddate2, Roll2, Companyname2, ExperienceDescription2, Fileurl , Address1, Address2, Location, Languages, Sociallink1, Sociallink2, Sociallink3})
      .then((res)=>{
         localStorage.setItem("active", res.data.activation_token)
       localStorage.setItem("id", res.data.id)
@@ -49,6 +48,7 @@ const ResumeScreen = () => {
   
     }
   }
+ 
   const getUsers = async () =>{
     const allusers = await axios.get("http://localhost:8000/api/getdetailsall").then((res)=>{
       dispatch(getusersall(res.data))
@@ -69,7 +69,7 @@ const ResumeScreen = () => {
       return <Experiences  page={page} setPage={setPage} formdata={formdata} Setformdata={Setformdata}/>
     }
     else if(page === 4){
-      return <Project  page={page} setPage={setPage} formdata={formdata} Setformdata={Setformdata}/>
+      return <Project  page={page} setPage={setPage} formdata={formdata} Setformdata={Setformdata} Fileurl={Fileurl} SetFileUrl={SetFileUrl}/>
     }
     else if(page === 5){
      return <Addition setPage={setPage} formdata={formdata} Setformdata={Setformdata} handleSubmit={handleSubmit} />

@@ -4,7 +4,9 @@ const initialState ={
     isUser:false,
     users_id:[],
     users:[],
-    allusers:[]
+    allusers:[],
+    ResumeLink:"",
+    public_id:""
 }
 
 const ResumeSlice = createSlice({
@@ -22,12 +24,18 @@ const ResumeSlice = createSlice({
         },
         getusersall: (state, action) =>{
              state.allusers = (action.payload)
+        },
+        getlink:(state, action) =>{
+             state.ResumeLink = action.payload
+        },
+        getpublicid:(state, action) =>{
+            state.public_id = action.payload
         }
     }
 })
 
 export default ResumeSlice.reducer
-export  const {user, getid, getusers, getusersall,} = ResumeSlice.actions
+export  const {user, getid, getusers, getusersall, getlink, getpublicid} = ResumeSlice.actions
 
 export const SelectisUser = (state) =>  state.resume.isUser 
 export const Selectid = (state) => state.resume.user_id

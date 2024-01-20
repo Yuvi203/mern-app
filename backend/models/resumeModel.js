@@ -134,26 +134,9 @@ const portfolioSchema = Schema({
     ExperienceDescription2:{
         type:String,
     },
-    Title:{
+    Fileurl:{
         type:String,
         required:true
-    },
-    Link:{
-        type:String,
-       required:true
-    },
-    Description:{
-        type:String,
-        required:true
-    },
-    Title2:{
-        type:String,
-    },
-    Link2:{
-        type:String,
-    },
-    Description2:{
-        type:String,
     },
     Address1:{
         type:String
@@ -175,8 +158,11 @@ const portfolioSchema = Schema({
     },
     Sociallink3:{
         type:String
-    }
-})
+    },
+
+},
+{timestamp:true}
+)
 
 const Portfolio = model("portfolios", portfolioSchema)
 

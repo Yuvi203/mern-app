@@ -2,24 +2,23 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import img from "../img/woman9.png"
 import { Bounce, Zoom } from 'react-reveal'
-import axios from 'axios'
+import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
+import {storage} from "../helpers/firebase"
 
+const Project = ({page, setPage,  formdata, Setformdata, Fileurl, SetFileUrl}) => {
 
-const Project = ({page, setPage,  formdata, Setformdata,}) => {
- 
   const handleChange = (e) =>{
     const file = e.target.files[0]
-    const formData = new FormData()
-    formData.append('file', file)
-    formData.append("upload_preset",import.meta.env.REACT_PRESET_KEY)
-    axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.REACT_CLOUD_NAME}/image/upload`, formData)
-    .then((res)=>{
-    alert("submitted")
-    })
-    .catch(()=>{
-      alert("failed")
+    const fileRef = ref(storage, `files/${file.name}`)
+    uploadBytes(fileRef, file).then((snapshot)=>{
+      getDownloadURL(snapshot.ref).then((url)=>{
+        console.log(url)
+         SetFileUrl(url)
+      })
     })
  }
+
+ 
 
   return (
     <Bounce left>
@@ -33,8 +32,8 @@ const Project = ({page, setPage,  formdata, Setformdata,}) => {
      <div className='form-wrapper'>
      <div className='file-input'>
         <label>
-          Select file
-        <input className='file' type='file' onChange={handleChange}/>
+           {Fileurl ? "Uploaded" :"Select File"}
+        <input className='file' type='file' onChange={handleChange} accept='application/pdf'/>
         </label>
        </div>
      </div>
