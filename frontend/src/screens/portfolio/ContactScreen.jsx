@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
@@ -6,15 +6,36 @@ import { FaLocationDot } from "react-icons/fa6";
 import Title from '../../components/Title';
 import ContactItem from '../../components/ContactItem';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import {ToastContainer, toast } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
 
 
 const ContactScreen = () => {
   const {users} = useSelector((state)=> state.resume)
   const phone = <FaPhoneAlt/>
-  const email = <MdEmail/>
+  const email2 = <MdEmail/>
   const location = <FaLocationDot/>
+  const [name, Setname] = useState("")
+  const [email, Setemail] = useState("")
+  const [subject, Setsubject] = useState("")
+  const [message, Setmessage] = useState("")
+  const user_mailid = users.Email
+  
+  const Sendmail = async (e) =>{
+    try {
+    e.preventDefault()
+    await axios.post("http://localhost:8000/api/sendmail", {name, email, subject, message, user_mailid}).then((res)=>{
+      alert("Email send Succesfull")
+    })
+    } catch (error) {
+     alert("error!!")
+    }
+  }
+
   return (
     <Container>
+       <ToastContainer/>
     <Title title={"Contact"}/>
     <div className='contact-section'>
     <div className='left-content'>
@@ -22,26 +43,34 @@ const ContactScreen = () => {
      <form className='contact-form'>
      <div className="form-field">
           <label>Enter your name</label>
-          <input type="text" />
+          <input type="text"  value={name} onChange={(e)=>{
+            Setname(e.target.value)
+          }}/>
       </div>
     <div className="form-field">
-          <label>Enter your email</label>
-          <input type="email" />
+          <label>Enter my email</label>
+          <input type="email" value={email} onChange={(e)=>{
+            Setemail(e.target.value)
+          }}/>
     </div>
     <div className="form-field">
           <label>Enter your subject</label>
-          <input type="text" />
+          <input type="text" value={subject} onChange={(e)=>{
+            Setsubject(e.target.value)
+          }}/>
     </div>
     <div className="form-field">
           <label>Enter your Message</label>
-          <textarea cols={"30"} rows={"10"}></textarea>
+          <textarea cols={"30"} rows={"10"} value={message} onChange={(e)=>{
+            Setmessage(e.target.value)
+          }}></textarea>
     </div>
-    <button className='btn3'>Send Email</button>
+    <button className='btn3' onClick={Sendmail}>Send Email</button>
      </form>
     </div>
     <div className='right-content'>
      <ContactItem title={"Phone"} icon={phone} phone={users.MobileNo}/>
-     <ContactItem title={"Phone"} icon={email} email={users.Email}/>
+     <ContactItem title={"Phone"} icon={email2} email={users.Email}/>
      {users.Address1 || users.Address2 ?    <ContactItem title={"Address"} icon={location} address1={users.Address1} address2={users.Address2}/> :<></>}
     </div>
     </div>
@@ -66,16 +95,20 @@ padding:3rem;
   display:grid;
 grid-template-columns:repeat(2, 1fr);
 grid-column-gap:2rem;
-@media screen and (max-width:978px) {
-  grid-template-columns:repeat(1, fr);
-}
-    }
-
+@media screen and (max-width: 978px){
+    grid-template-columns:repeat(1, 1fr);
+ 
+  }
+  
 .right-content{
   display:grid;
   grid-template-columns:repeat(1, 1fr);
   @media screen and (max-width: 502px){
      width: 70%;
+  }
+  @media screen and (max-width: 978px){
+     width: 10%;
+     padding-top:1rem;
   }
 }
 h4{
@@ -121,4 +154,5 @@ width:100%;
   }
  }
 }
+ }
 `

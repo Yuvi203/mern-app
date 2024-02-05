@@ -10,8 +10,8 @@ const Skills = ({page, setPage, formdata, Setformdata,}) => {
   const Add = (e) =>{
     e.preventDefault()
     setInputelement([...inputelment,
-    <>
-      <div className='form-group'>
+    <div>
+      <div className='form-group' >
       <input type='text' placeholder='Skills...' value={formdata.Skill9}   onChange={(e)=>{
          Setformdata({...formdata, Skill9:e.target.value})
       }}/>
@@ -19,7 +19,7 @@ const Skills = ({page, setPage, formdata, Setformdata,}) => {
          Setformdata({...formdata, Skill10:e.target.value})
       }}/>
      </div>
-    </>])
+    </div>])
     Setshow(false)
   }
 

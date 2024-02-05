@@ -1,6 +1,9 @@
 const {Schema, model} = require("mongoose")
 
 const portfolioSchema = Schema({
+       Userid:{
+         type:String
+       },
         Profile:{
             type: String,
             required:true
@@ -152,14 +155,19 @@ const portfolioSchema = Schema({
     },
     Sociallink1:{
         type:String,
+        unique:true
     },
     Sociallink2:{
         type:String,
     },
     Sociallink3:{
-        type:String
+        type:String,
     },
-
+   ViewIdentifiers:[{type:String, unique:true}],
+   Viewcount:{
+    type:Number,
+    default:0
+   }
 },
 {timestamp:true}
 )

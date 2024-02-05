@@ -1,8 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
 import {Link} from "react-router-dom"
+import axios from 'axios'
+import {nanoid} from "@reduxjs/toolkit"
 
 const Profile = ({data}) => {
+    const uniqueid = data._id
+    const id = data._id
+    const Updatecount = async () =>{
+    try {
+        await axios.post(`http://localhost:8000/api/incprofileviews/${id}`,{uniqueid})
+    } catch (error) {
+      console.log(error)
+    }
+    }
+
   return (
       <Container>
        <img src={data.Profile} alt="user"/>
@@ -11,8 +23,9 @@ const Profile = ({data}) => {
        <p>{data.Profession}<br/> </p>
        <div className='buttons'>
          <button className='primary'>Message</button>
-         <Link to={`/portfolio/${data._id}`}><button className='primary'>Portfolio</button></Link>
+         <Link to={`/portfolio/${data._id}`}><button className='primary' onClick={Updatecount}>Portfolio</button></Link>
        </div>
+       <p>{data.Viewcount} Views</p>
       </Container>
   )
 }

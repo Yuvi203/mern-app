@@ -10,6 +10,8 @@ import { FiMessageCircle } from "react-icons/fi";
 
 const HomeScreen = () => {
     const {users} = useSelector((state)=> state.resume)
+    const [theme, setTheme] = useState('light-theme')
+    
 
   return (
     <>
@@ -29,6 +31,7 @@ const HomeScreen = () => {
          </a> : <></>}
          </div>
       </div>
+      
     </Container>
     </>
   )
@@ -37,6 +40,7 @@ const HomeScreen = () => {
 export default HomeScreen
 
 const Container = styled.div`
+
 width:100%;
 height:100vh;
 display:flex;

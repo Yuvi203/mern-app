@@ -6,7 +6,8 @@ import {gettoken, getusers, login} from "./redux/slices/AuthSlice"
 import { lazy, Suspense } from "react"
 import Loading from "./components/Loading"
 import { SelectisUser, getid, getusersall } from "./redux/slices/ResumeSlice"
-import Sidebar  from "./components/Sidebar"
+import Resumescreen2 from "./screens/Resumescreen2"
+
 
 const Loginscreen = lazy(()=> import("./screens/LoginScreen"))
 const Registerscreen = lazy(()=> import("./screens/RegisterScreen"))
@@ -35,6 +36,10 @@ const App = () => {
   const {ResumeLink} = useSelector((state)=> state.resume)
   const {id} = useParams()
   const [Fileurl, SetFileUrl] = useState("")
+  const [users, Setusers] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [show, Setshow] = useState(false)
+
 
   useEffect(()=>{
     const allusers = axios.get("http://localhost:8000/api/getdetailsall").then((res)=>{
@@ -81,17 +86,26 @@ const App = () => {
      }
   }, [dispatch, token])
 
+  const getreact = async () =>{
+    await axios.get("http://localhost:8000/api/getreact",).then((res)=>{
+      Setusers(res.data)
+      console.log("designers", res.data)
+      setLoading(false)
+    })
+  }
+ 
   return (
     <div>
        <Suspense fallback={<Loading/>}>
       <Routes>
       {data  ? <>
       <Route path="/" element={<Homescreen/>}/>
-      <Route path="/portfolios" element={<Explorescreen/>}/>
-      <Route path="/profiles" element={<Profiles/>}/>
-      <Route path="/portfolio/:id" element={<PortfolioScreen Fileurl={Fileurl} SetFileUrl={SetFileUrl}/>}/>
+      <Route path="/portfolios" element={<Explorescreen users={users} Setusers={Setusers} loading={loading} setLoading={setLoading} show={show} Setshow={Setshow}/>}/>
+      <Route path="/profiles" element={<Profiles  users={users} Setusers={Setusers} loading={loading} setLoading={setLoading} show={show} Setshow={Setshow} getreact={getreact}/>} Setusers={Setusers}  />
+      <Route path="/portfolio/:id" element={<PortfolioScreen Fileurl={Fileurl} SetFileUrl={SetFileUrl} />}/>
       <Route path="/sucess" element={<Successscreen/>}/>
-      {active ?  <Route path="/user/:id" element={<Userscreen/>}/> :  <Route path="/resume" element={<ResumeScreen Fileurl={Fileurl} SetFileUrl={SetFileUrl}/>}/>}
+      <Route path="/updateresume/:id" element={<Resumescreen2/>} Fileurl={Fileurl} SetFileUrl={SetFileUrl}/>
+      {active ?  <Route path="/user/:id" element={<Userscreen />}/> :  <Route path="/resume" element={<ResumeScreen Fileurl={Fileurl} SetFileUrl={SetFileUrl}/>}/>}
      </>:<>
       <Route path="/" element={<Loginscreen/>}/>
       <Route path="/register" element={<Registerscreen/>}/>

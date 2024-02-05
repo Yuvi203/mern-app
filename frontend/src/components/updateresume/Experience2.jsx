@@ -1,38 +1,41 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import img from "../img/man11.png"
+import img from "../../img/man11.png"
 import { Bounce, Rotate } from 'react-reveal'
+import { useSelector } from 'react-redux'
 
-
-const Experiences = ({page, setPage, formdata, Setformdata}) => {
+const Experience2 = ({page, setPage, formdata, Setformdata}) => {
   const [inputelment, setInputelement] = useState([])
   const [show, Setshow] = useState(true)
+  const {users} = useSelector((state)=> state.resume)
+
   const Add = (e) =>{
     e.preventDefault()
     setInputelement([...inputelment,
     <div>
       <div className='form-group'>
-      <input type='text' placeholder='Start date' value={formdata.CompanyStartdate2} onChange={(e)=>{
+      <input type='text' placeholder='Start date' defaultValue={users.CompanyStartdate2} onChange={(e)=>{
          Setformdata({...formdata, CompanyStartdate2:e.target.value})
       }}/>
-      <input type='text' placeholder='End date' value={formdata.CompanyEnddate2} onChange={(e)=>{
+      <input type='text' placeholder='End date' defaultValue={users.CompanyEnddate2} onChange={(e)=>{
          Setformdata({...formdata, CompanyEnddate2:e.target.value})
       }}/>
      </div>
      <div className='form-wrapper'>
-     <input placeholder='Roll...' value={formdata.Roll2} onChange={(e)=>{
+     <input placeholder='Roll...' defaultValue={users.Roll2} onChange={(e)=>{
          Setformdata({...formdata, Roll2:e.target.value})
       }}/>
-      <input placeholder='Company Name...' value={formdata.Companyname2} onChange={(e)=>{
+      <input placeholder='Company Name...' defaultValue={users.Companyname2} onChange={(e)=>{
          Setformdata({...formdata, Companyname2:e.target.value})
       }}/>
-      <textarea placeholder='description...' value={formdata.ExperienceDescription2} onChange={(e)=>{
+      <textarea placeholder='description...' defaultValue={users.ExperienceDescription2} onChange={(e)=>{
          Setformdata({...formdata, ExperienceDescription2:e.target.value})
       }}/>
      </div>
     </div>])
       Setshow(false)
   }
+
   return (
     <Rotate left>
     <Container>
@@ -43,21 +46,21 @@ const Experiences = ({page, setPage, formdata, Setformdata}) => {
     <form>
     <h3>Experience details</h3>
     <div className='form-group'>
-      <input  type="txt" placeholder='Start year' value={formdata.CompanyStartdate} onChange={(e)=>{
-         Setformdata({...formdata, CompanyStartdate:e.target.value})
+      <input  type="txt" placeholder='Start year' defaultValue={users.CompanyStartdate} onChange={(e)=>{
+        Setformdata({...formdata, CompanyStartdate:e.target.value})
       }}/>
-      <input type='txt' placeholder='End year' value={formdata.CompanyEnddate} onChange={(e)=>{
-         Setformdata({...formdata, CompanyEnddate:e.target.value})
+      <input type='txt' placeholder='End year' defaultValue={users.CompanyEnddate} onChange={(e)=>{
+        Setformdata({...formdata, CompanyEnddate:e.target.value})
       }}/>
      </div>
      <div className='form-wrapper'>
-     <input placeholder='Roll...' value={formdata.Roll} onChange={(e)=>{
+     <input placeholder='Roll...' defaultValue={users.Roll} onChange={(e)=>{
          Setformdata({...formdata, Roll:e.target.value})
       }}/>
-      <input placeholder='Company Name...' value={formdata.Companyname} onChange={(e)=>{
+      <input placeholder='Company Name...' defaultValue={users.Companyname} onChange={(e)=>{
          Setformdata({...formdata, Companyname:e.target.value})
       }}/>
-      <textarea placeholder='Tell About Your Working Experience...' value={formdata.ExperienceDescription} onChange={(e)=>{
+      <textarea placeholder='Tell About Your Working Experience...' defaultValue={users.ExperienceDescription} onChange={(e)=>{
          Setformdata({...formdata, ExperienceDescription:e.target.value})
       }}/>
      </div>
@@ -80,7 +83,8 @@ const Experiences = ({page, setPage, formdata, Setformdata}) => {
   )
 }
 
-export default Experiences
+export default Experience2
+
 
 const Container = styled.div`
   display:flex;

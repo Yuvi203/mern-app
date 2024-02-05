@@ -2,10 +2,10 @@ import React from 'react'
 import { Bounce } from 'react-reveal'
 import styled from 'styled-components'
 
-const Categaries = ({img, title}) => {
+const Categaries = ({img, title, profiles}) => {
   return (
     <Bounce top>
-     <Container>
+     <Container onClick={profiles}>
       <div className='image'>
         <img src={img} alt=""/>
       </div>

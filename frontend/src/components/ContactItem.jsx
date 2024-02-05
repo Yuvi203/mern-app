@@ -29,6 +29,10 @@ align-items: center;
 &:not(:last-child){
   margin-bottom: 2.5rem;
 }
+@media screen and (max-width: 978px){
+     width: 100%;
+  }
+ 
 .left{
   padding:1.5rem;
   border: 1px solid var(--border-color);

@@ -1,7 +1,9 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 const UserProfile = ({profile, name, age, profession, skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8}) => {
+    const {users} = useSelector((state)=> state.resume)
   return(
     <Container>
     <img src={profile} alt="user"/>
@@ -13,12 +15,12 @@ const UserProfile = ({profile, name, age, profession, skill1, skill2, skill3, sk
       <ul>
          <li>{skill1}</li>
          <li>{skill2}</li>
-         <li>{skill3}</li>
-         <li>{skill4}</li>
-         <li>{skill5}</li>
-         <li>{skill6}</li>
-         <li>{skill7}</li>
-         <li>{skill8}</li>
+         {users.Skill3 ?  <li>{skill3}</li>:<></>}
+         {users.Skill4 ?  <li>{skill4}</li>:<></>}
+         {users.Skill5 ?  <li>{skill5}</li>:<></>}
+         {users.Skill6 ?  <li>{skill6}</li>:<></>}
+         {users.Skill7 ?  <li>{skill7}</li>:<></>}
+         {users.Skill8 ?  <li>{skill8}</li>:<></>}
       </ul>
     </div>
    </Container>

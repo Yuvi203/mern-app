@@ -11,16 +11,17 @@ import ProjectScreen from './portfolio/ProjectScreen'
 import BlogScreen from './portfolio/BlogScreen'
 import ContactScreen from './portfolio/ContactScreen'
 import Loading from "../components/Loading"
-import { BsBrightnessHigh } from "react-icons/bs";
-import Switch from "@material-ui/core/Switch"
 
 
-const PortfolioScreen = ({Fileurl, SetFileUrl}) => {
+
+const PortfolioScreen = ({Fileurl, SetFileUrl,}) => {
     const {id} = useParams()
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(true)
-    const [theme, setTheme] = useState('dark-theme')
-    const [checked, setChecked] = useState(false)
+    const {users} = useSelector((state)=> state.resume)
+
+
+
 
     useEffect(()=>{
       axios.get(`http://localhost:8000/api/getdetails/${id}`).then((res)=>{
@@ -30,6 +31,16 @@ const PortfolioScreen = ({Fileurl, SetFileUrl}) => {
       })
    }, [])
 
+   useEffect(()=>{
+    const Viewcount = async () =>{
+      try {
+        const response = await axios.get("http://localhost:8000/api/getprofileviews", {id})
+      } catch (error) {
+        console.log(error)
+      }
+    } 
+    Viewcount()
+   }, [])
 
   
   return (

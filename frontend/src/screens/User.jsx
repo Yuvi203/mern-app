@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Link, useParams} from "react-router-dom"
 import axios from "axios"
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,11 +7,14 @@ import styled from 'styled-components'
 import UserProfile from '../components/UserProfile'
 import Buttons from '../components/Buttons'
 
+
 const User = () => { 
   const {id} = useParams()
   const dispatch = useDispatch()
   const {users} = useSelector((state)=> state.resume)
-  
+  const [count, Setcount] = useState(0)
+
+
   useEffect(()=>{
     axios.get(`http://localhost:8000/api/getdetails/${id}`).then((res)=>{
      console.log("data", res.data)
@@ -25,14 +28,12 @@ const User = () => {
     })
  }, [])
 
-  
-
- 
   return (
     <Container>
       <div className='items box'>
         <div className='profile'>
           <UserProfile profile={users.Profile} name={users.Firstname} age={users.Age} profession={users.Profession} skill1={users.Skill} skill2={users.Skill2} skill3={users.Skill3} skill4={users.Skill4} skill5={users.Skill5} skill6={users.Skill6} skill7={users.Skill7} skill8={users.Skill8}/>
+          <p> Viewed By {users.Viewcount} People</p>
         </div>
         <div className='buttons'>
         <Buttons users={users}/> 
@@ -52,8 +53,12 @@ const Container = styled.div`
   padding:2rem;
   .profile{
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
+  p{
+    margin-top:10px;
+  }
   }
   .box{
     display:flex;
