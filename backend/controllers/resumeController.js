@@ -27,8 +27,10 @@ const resumeController ={
     },
     getdetailsall: async (req, res) =>{
       try {
-        const user = await Portfolio.find()
-        res.status(200).send(user)
+        await Portfolio.find({_id:{$ne:req.params.id}}).then((users)=>{
+          res.status(200).send(users) 
+        })
+  
       } catch (error) {
         res.status(500).json({msg:error.message})
       }
@@ -62,10 +64,91 @@ const resumeController ={
         res.status(500).json({msg:error.message})
       }
     },
-    getdevelopers: async (req, res) =>{
-      
+    connectviews: async (req, res) =>{
+     try {
+      const profile = await Portfolio.findById(req.params.id)
+      const ConnectIdentifiers = req.body.uniqueid
+
+      if(profile && !profile.ConnectIdentifiers.includes(ConnectIdentifiers)){
+         await profile.updateOne({$inc:{Connectcount:1}, $push:{ConnectIdentifiers:ConnectIdentifiers}})
+         res.json({Connectcount:profile.Connectcount})
+      }
+      else{
+        res.status(400).json({msg:"View count already incremented for this user"})
+      }
+     } catch (error) {
+       res.status(500).json({msg:error.message})
+     }
+    },
+    follow:async (req, res) =>{
+       try {
+         const profile = await Portfolio.findById(req.params.uniqueid)
+         const FollowIdentifiers = req.body.id
+         if(profile && !profile.FollowIdentifiers.includes(FollowIdentifiers)){
+          await profile.updateOne({$push:{FollowIdentifiers:FollowIdentifiers}})
+         }
+         else{
+          res.status(400).json({msg:"already followed this user"})
+         }
+       } catch (error) {
+        res.status(500).json({msg:error.message})
+       }
+    },
+    getfollowers: async (req, res) =>{
       try {
-        const users = await Portfolio.find({Profession:new RegExp('developer', 'i')}).sort({Viewcount:'desc'})
+        const user = await Portfolio.findById(req.params.id)
+        const connectid =  user.ConnectIdentifiers
+        const profiles = await Portfolio.find({_id:{$in:connectid}})
+        res.status(200).json(profiles)
+      } catch (error) {
+        res.status(500).json({msg:error.message})
+      }
+   },
+   getfollowedpeople:async (req, res) =>{
+      try {
+        const user = await Portfolio.findById(req.params.id)
+        const followid = user.FollowIdentifiers
+        const profiles = await Portfolio.find({_id:{$in:followid}})
+        res.status(200).json(profiles)
+      } catch (error) {
+        res.status(500).json({msg:error.message})
+      }
+   },
+    disconnect: async (req, res) =>{
+      try {
+        const {id, removeid} = req.params
+        const doc = await Portfolio.findByIdAndUpdate(id, {
+        $pull:{ConnectIdentifiers:removeid},
+        $inc:{Connectcount:-1}
+       }, {new:true})
+       if (doc.Connectcount > 0) {
+         doc.Connectcount -= 1;
+       }
+        res.status(200).json(doc)
+      } 
+       catch (error) {  
+        res.status(500).json({msg:error.message})
+      }
+   },
+   unfollow:async (req, res) =>{
+     try {
+      const {id, removeid} = req.params
+      const doc = await Portfolio.findByIdAndUpdate(id, {
+        $pull:{FollowIdentifiers:removeid}
+      })
+      res.status(200).json(doc)
+     } catch (error) {
+      res.status(500).json({msg:error.message})
+     }
+   },
+    getdevelopers: async (req, res) =>{
+      try {
+        const users = await Portfolio.find({
+          $and: [
+              { Profession: new RegExp('developer', 'i') },
+              { _id: { $ne: req.params.id } } 
+          ]
+      }).sort({Viewcount:'desc'})
          if(users){
           res.status(200).json(users)
          }
@@ -78,7 +161,12 @@ const resumeController ={
     },
     getdesigners: async (req, res) =>{
       try {
-        const users = await Portfolio.find({Profession:new RegExp('designer', 'i')}).sort({Viewcount:'desc'})
+        const users = await Portfolio.find({
+          $and: [
+              { Profession: new RegExp('designer', 'i') },
+              { _id: { $ne: req.params.id } } 
+          ]
+      }).sort({Viewcount:'desc'})
          if(users){
           res.status(200).json(users)
          }
@@ -91,7 +179,12 @@ const resumeController ={
     },
     getdatascientist: async (req, res) =>{
       try {
-        const users = await Portfolio.find({Profession:new RegExp('data scientist analyst', 'i')}).sort({Viewcount:'desc'})
+        const users = await Portfolio.find({
+          $and: [
+              { Profession: new RegExp('data scientist analyst', 'i') },
+              { _id: { $ne: req.params.id } } 
+          ]
+      }).sort({Viewcount:'desc'})
         if(users){
          res.status(200).json(users)
         }
@@ -105,7 +198,12 @@ const resumeController ={
    },
    getbusinessaanalyst: async (req, res) =>{
     try {
-      const users = await Portfolio.find({Profession:new RegExp('business analyst', 'i')}).sort({Viewcount:'desc'})
+      const users = await Portfolio.find({
+        $and: [
+            { Profession: new RegExp('business analyst', 'i') },
+            { _id: { $ne: req.params.id } } 
+        ]
+    }).sort({Viewcount:'desc'})
       if(users){
        res.status(200).json(users)
       }
@@ -118,7 +216,12 @@ const resumeController ={
    },
    getalandml: async (req, res) =>{
     try {
-      const users = await Portfolio.find({Profession:new RegExp('ai machine learning', 'i')}).sort({Viewcount:'desc'})
+      const users = await Portfolio.find({
+        $and: [
+            { Profession: new RegExp('ai machine learning', 'i') },
+            { _id: { $ne: req.params.id } } 
+        ]
+    }).sort({Viewcount:'desc'})
       if(users){
        res.status(200).json(users)
       }
@@ -131,7 +234,12 @@ const resumeController ={
    },
    getblokchain: async (req, res) =>{
     try {
-      const users = await Portfolio.find({Profession:new RegExp('tester', 'i')}).sort({Viewcount:'desc'})
+      const users = await Portfolio.find({
+        $and: [
+            { Profession: new RegExp('tester', 'i') },
+            { _id: { $ne: req.params.id } } 
+        ]
+    }).sort({Viewcount:'desc'})
       if(users){
        res.status(200).json(users)
       }
@@ -144,7 +252,12 @@ const resumeController ={
    },
    getdevops: async (req, res) =>{
     try {
-      const users = await Portfolio.find({Profession:new RegExp('devops cloud aws', 'i')}).sort({Viewcount:'desc'})
+      const users = await Portfolio.find({
+        $and: [
+            { Profession: new RegExp('devops cloud aws', 'i') },
+            { _id: { $ne: req.params.id } } 
+        ]
+    }).sort({Viewcount:'desc'})
       if(users){
        res.status(200).json(users)
       }
@@ -157,7 +270,12 @@ const resumeController ={
    },
    getcloud: async (req, res) =>{
     try {
-      const users = await Portfolio.find({Profession:new RegExp('cyber security ethical hacking hunter linux', 'i')}).sort({Viewcount:'desc'})
+      const users = await Portfolio.find( {
+        $and: [
+            { Profession: new RegExp('cyber security ethical hacking hunter linux', 'i') },
+            { _id: { $ne: req.params.id } } 
+        ]
+    })
       if(users){
        res.status(200).json(users)
       }
@@ -238,7 +356,8 @@ const resumeController ={
       } catch (error) {
         res.status(500).json({msg:error.message})
       }
-   }
+   },
+
 }
 
 module.exports = resumeController;

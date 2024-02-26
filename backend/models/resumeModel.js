@@ -1,6 +1,10 @@
 const {Schema, model} = require("mongoose")
 
 const portfolioSchema = Schema({
+      User:{
+        type:Schema.Types.ObjectId,
+        ref:"users"
+      },
        Userid:{
          type:String
        },
@@ -167,7 +171,13 @@ const portfolioSchema = Schema({
    Viewcount:{
     type:Number,
     default:0
-   }
+   },
+   ConnectIdentifiers:[{type:String, unique:true}],
+   Connectcount:{
+    type:Number,
+    default:0
+   },
+   FollowIdentifiers:[{type:String, unique:true}],
 },
 {timestamp:true}
 )

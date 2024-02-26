@@ -16,6 +16,10 @@ const userSchema = Schema({
     password:{
         type: String,
         required: [true, "Please enter your password"],
+    },
+    resume:{
+        type:Schema.Types.ObjectId,
+        ref:"portfolios"
     }
 },
 {timestamp:true}

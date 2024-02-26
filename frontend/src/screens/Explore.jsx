@@ -10,8 +10,8 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 
-const ExploteScreen = ({users, Setusers, loading, setLoading, show, Setshow}) => {
-  const id = localStorage.getItem("id")
+const Explore = ({users, Setusers, loading, setLoading, show, Setshow}) => {
+  const id = "b58cefbc514a"
 
   const getDevelopers = async () =>{
      const users = await axios.get(`http://localhost:8000/api/getdevelopers/${id}`).then((data)=>{
@@ -77,19 +77,19 @@ const getcloud = async () =>{
 
   return (
       <Container>
-       <Link to={"/profiles"}><Categaries img={img1} title={"Data Scientist /Analyst"} profiles={getdatascientist}/></Link>
-       <Link to={"/profiles"}><Categaries img={img3} title={"AI and ML"} profiles={getaiandml} users={users}/></Link>
-       <Link to={"/profiles"}><Categaries img={img2} title={"Web/App developer"} profiles={getDevelopers} users={users} show={show} /></Link>
-       <Link to={"/profiles"}><Categaries img={img4} title={"Tester"} profiles={getblockchain} users={users}/></Link>
-       <Link to={"/profiles"}><Categaries img={img5} title={"DevOps/Cloud engineer"} profiles={getdevops} users={users}/></Link>
-       <Link to={"/profiles"}><Categaries img={img2} title={"UI UX designer"}  profiles={getdesigners} users={users}/></Link>
-       <Link to={"/profiles"}><Categaries img={img1} title={"Business Analyst"} profiles={getbusinessanalyst} users={users}/></Link>
-       <Link to={"/profiles"}><Categaries img={img4} title={"Cyber Security"} profiles={getcloud} users={users}/></Link>
+       <Link to={"/profiles/portfolios"}><Categaries img={img1} title={"Data Scientist /Analyst"} profiles={getdatascientist}/></Link>
+       <Link to={"/profiles/portfolios"}><Categaries img={img3} title={"AI and ML"} profiles={getaiandml} users={users}/></Link>
+       <Link to={"/profiles/portfolios"}><Categaries img={img2} title={"Web/App developer"} profiles={getDevelopers} users={users} show={show} /></Link>
+       <Link to={"/profiles/portfolios"}><Categaries img={img4} title={"Tester"} profiles={getblockchain} users={users}/></Link>
+       <Link to={"/profiles/portfolios"}><Categaries img={img5} title={"DevOps/Cloud engineer"} profiles={getdevops} users={users}/></Link>
+       <Link to={"/profiles/portfolios"}><Categaries img={img2} title={"UI UX designer"}  profiles={getdesigners} users={users}/></Link>
+       <Link to={"/profiles/portfolios"}><Categaries img={img1} title={"Business Analyst"} profiles={getbusinessanalyst} users={users}/></Link>
+       <Link to={"/profiles/portfolios"}><Categaries img={img4} title={"Cyber Security"} profiles={getcloud} users={users}/></Link>
       </Container>
   )
 }
 
-export default ExploteScreen
+export default Explore
 
 const Container = styled.div`
 padding:2rem;

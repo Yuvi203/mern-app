@@ -13,7 +13,7 @@ const Homecom1 = () => {
                <h1>Where You Can Search <span>Millions of Portfolios</span></h1>
           <p>Cloud Portfolio provides a platform for individuals to build and maintain a professional online Porfolio. Users can showcase their career achievements, connect with others in their industry.</p>
           <div className='left-button'>
-            <Link to={"/portfolios"}><button className='btn1'>Explore</button></Link>
+            <Link to={"/explore"}><button className='btn1'>Explore</button></Link>
             <Link to={"/resume"}><button className='btn1'>Create</button></Link>
           </div>
        </div>

@@ -5,7 +5,7 @@ import axios from 'axios'
 import { useSelector } from 'react-redux'
 
 
-const Profile = ({data}) => {
+const Profile4 = ({data}) => {
     const {users} = useSelector((state)=> state.resume)
     const uniqueid = users._id
     const id = data._id
@@ -16,7 +16,9 @@ const Profile = ({data}) => {
       console.log(error)
     }
     }
-
+   const Disconnect = async () =>{
+     await axios.delete(`http://localhost:8000/api/unfollow/${uniqueid}/${id}`)
+   }
   return (
       <Container>
        <img src={data.Profile} alt="user"/>
@@ -25,14 +27,15 @@ const Profile = ({data}) => {
        <p>{data.Profession}<br/> </p>
        <div className='buttons'>
        <Link to={`/messages/${data._id}`}><button className='primary'>Message</button></Link>
-        <Link to={`/portfolio/${data._id}`}><button className='primary' onClick={Updatecount}>Portfolio</button></Link>
+         <Link to={`/portfolio/${data._id}`}><button className='primary' onClick={Updatecount}>Portfolio</button></Link>
+         <button className='primary' onClick={Disconnect}>Unfollow</button>
        </div>
        <p>{data.Connectcount} Connections</p>
       </Container>
   )
 }
 
-export default Profile
+export default Profile4
 
 const Container = styled.div`
     background-color: #231E39;

@@ -34,6 +34,7 @@ const User = () => {
         <div className='profile'>
           <UserProfile profile={users.Profile} name={users.Firstname} age={users.Age} profession={users.Profession} skill1={users.Skill} skill2={users.Skill2} skill3={users.Skill3} skill4={users.Skill4} skill5={users.Skill5} skill6={users.Skill6} skill7={users.Skill7} skill8={users.Skill8}/>
           <p> Viewed By {users.Viewcount} People</p>
+          <p>{users.Connectcount} Connections</p>
         </div>
         <div className='buttons'>
         <Buttons users={users}/> 

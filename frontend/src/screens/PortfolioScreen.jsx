@@ -20,9 +20,6 @@ const PortfolioScreen = ({Fileurl, SetFileUrl,}) => {
     const [loading, setLoading] = useState(true)
     const {users} = useSelector((state)=> state.resume)
 
-
-
-
     useEffect(()=>{
       axios.get(`http://localhost:8000/api/getdetails/${id}`).then((res)=>{
        console.log("data", res.data)

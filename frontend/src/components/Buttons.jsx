@@ -6,7 +6,7 @@ const Buttons = ({users}) => {
   return (
     <Container>
       <Link to={`/portfolio/${users._id}`}><button className='btn3'>Portfolio</button></Link>
-          <button className='btn3'>Connect</button>
+      <Link to={`/connect/${users._id}`}><button className='btn3'>Connect</button></Link>
           <Link to={`/updateresume/${users._id}`}><button className='btn3'>Update</button></Link>
           <Link to={"/portfolios"}><button className='btn3'>Explore</button></Link>
     </Container>

@@ -1,38 +1,51 @@
-import React from 'react'
-import styled from 'styled-components'
-import {Link} from "react-router-dom"
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
+import { getfollowed } from '../redux/slices/ResumeSlice'
+const Profile2 = ({data}) => {
+   const {users} = useSelector((state)=> state.resume)
+   const id = data._id
+   const uniqueid = users._id
+   const [connect, SetConnect] = useState(false)
+   const [connect2, SetConnect2] = useState(false)
+   const dispatch = useDispatch()
 
-
-const Profile = ({data}) => {
-    const {users} = useSelector((state)=> state.resume)
-    const uniqueid = users._id
-    const id = data._id
-    const Updatecount = async () =>{
+   const handleConnect = async () =>{
+     try {
+        await axios.post(`http://localhost:8000/api/connectviews/${id}`, {uniqueid})
+        SetConnect(true)
+     } catch (error) {
+        console.log(error)
+     }
+   }
+   const handleFollow = async () =>{
     try {
-        await axios.post(`http://localhost:8000/api/incprofileviews/${id}`,{uniqueid})
+        await axios.post(`http://localhost:8000/api/follow/${uniqueid}`, {id})
+        .then((res)=>{
+            dispatch(getfollowed(res.data))
+            SetConnect2(true)
+        })
     } catch (error) {
-      console.log(error)
+        console.log(error)
     }
-    }
-
+   }
   return (
       <Container>
        <img src={data.Profile} alt="user"/>
        <h3>{data.Firstname}</h3>
 	   <h6>{data.Age}</h6>
        <p>{data.Profession}<br/> </p>
-       <div className='buttons'>
-       <Link to={`/messages/${data._id}`}><button className='primary'>Message</button></Link>
-        <Link to={`/portfolio/${data._id}`}><button className='primary' onClick={Updatecount}>Portfolio</button></Link>
+       <div className='buttons'> 
+       <button className='primary' onClick={handleConnect}>{connect ? "Connected" :"Connect"}</button>
+       <button className='primary' onClick={handleFollow}>{connect2 ? "Followed" :"Follow"}</button>
        </div>
        <p>{data.Connectcount} Connections</p>
       </Container>
   )
 }
 
-export default Profile
+export default Profile2
 
 const Container = styled.div`
     background-color: #231E39;
