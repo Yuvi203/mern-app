@@ -12,7 +12,6 @@ const {allusers} = useSelector((state)=> state.resume)
 const [filter, Setfilter] = useState("")
 const [isPending, startTransition] = useTransition()
 
-
 const handleSubmit = async (e)=>{
  await axios.get(`http://localhost:8000/api/filterprofiles/${filter}`).then((res)=>{
   console.log("filter users", res.data)

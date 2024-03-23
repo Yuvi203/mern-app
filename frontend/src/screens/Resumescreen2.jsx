@@ -29,8 +29,8 @@ const Resumescreen2 = () => {
           className: "toast",
           bodyClassName: "toast",
         });
-      
         })
+      
       } catch (error) {
         toast(error.response.data.msg, {
           className: "toast",

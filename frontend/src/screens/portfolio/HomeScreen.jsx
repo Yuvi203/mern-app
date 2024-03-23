@@ -5,6 +5,7 @@ import { FaFacebookSquare } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import { FiMessageCircle } from "react-icons/fi";
+import { Link } from 'react-router-dom';
 
 
 
@@ -29,6 +30,10 @@ const HomeScreen = () => {
          {users.Sociallink3 ?   <a href={users.Sociallink3} className="icon i-youtube">
             <FaFacebookSquare/>
          </a> : <></>}
+         </div>
+         <div className='button-p'>
+          <Link to={"/myproject"}><button className='primary'>My Projects</button></Link>
+          <Link to={"/myblog"}><button className='primary'>My Blogs</button></Link>
          </div>
       </div>
       
@@ -112,5 +117,11 @@ margin-right: 1rem;
     color: var(--white-color);
     margin-top:.3rem;
   }
+}
+.button-p{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:1rem;
 }
 `

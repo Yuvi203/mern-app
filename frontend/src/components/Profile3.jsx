@@ -26,7 +26,6 @@ const Profile3 = ({data}) => {
 	   <h6>{data.Age}</h6>
        <p>{data.Profession}<br/> </p>
        <div className='buttons'>
-        <Link to={`/messages/${data._id}`}><button className='primary'>Message</button></Link>
          <Link to={`/portfolio/${data._id}`}><button className='primary' onClick={Updatecount}>Portfolio</button></Link>
          <button className='primary' onClick={Disconnect}>Disconnect</button>
        </div>

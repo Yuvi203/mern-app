@@ -1,22 +1,54 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
+import { storage } from '../helpers/firebase'
+import axios from 'axios'
 
 
 const Blog = () => {
+  const [image , setImage] = useState()
+  const [blogimg, SetBlogimg] = useState("")
+  const [description, Setdescription] = useState("")
+  const blogid = localStorage.getItem("id")
+ 
+  const handleChange = (e) =>{
+    const file = e.target.files[0]
+    const fileRef = ref(storage, `blogimg/${file.name}`)
+    uploadBytes(fileRef, file).then((snapshot)=>{
+      getDownloadURL(snapshot.ref).then((url)=>{
+        console.log(url)
+         SetBlogimg(url)
+         setImage(url)
+      })
+    })
+ }
+
+  const Postblog = async () =>{
+    try {
+     await axios.post("http://localhost:8000/api/postblog", {blogid, blogimg, description}).then(()=>{
+        alert("Post uploaded Succesfully")
+      })
+    } catch (error) {
+        alert("Error!")
+    }
+  
+  }
   return (
      <Container>
         <form>
           <div className='img-b'>
-               <img />
+              {image ? <img src={image} alt=''/> :<img/>}
           </div>
         <div className='file-input'>
         <label>
           Select file
-        <input className='file' type='file' accept='image/*' />
+        <input className='file' type='file' accept='image/*' onChange={handleChange}/>
         </label>
        </div>
-           <textarea placeholder="Write Your Blog..."/>
-           <label>Post your Blog</label>
+           <textarea placeholder="Write Your Blog..." onChange={(e)=>{
+            Setdescription(e.target.value)
+           }}/>
+           <label onClick={Postblog}>Post your Blog</label>
         </form>
      </Container>
   )

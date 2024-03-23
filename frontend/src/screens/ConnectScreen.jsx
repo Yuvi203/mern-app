@@ -9,12 +9,13 @@ import { getfollowers, getusers, getprofiles } from '../redux/slices/ResumeSlice
 import Categaries from '../components/Categaries'
 import Buttons2 from '../components/Buttons2'
 
+
 const ConnectScreen = () => { 
     const {users} = useSelector((state)=> state.resume)
   //  const id = users._id
       const {id} = useParams()
     const dispatch = useDispatch()
-
+    
     useEffect(()=>{
       axios.get(`http://localhost:8000/api/getdetails/${id}`).then((res)=>{
         dispatch(getusers(res.data))
@@ -40,7 +41,7 @@ const ConnectScreen = () => {
           <img src={users.Profile} alt=''/>
           </div>
          <div>
-          <Buttons2 getdetails={getdetails} getfollower={getfollower}/>
+          <Buttons2 getdetails={getdetails} getfollower={getfollower} id={id}/>
          </div>
          </div>
         <div className='right-c'> 

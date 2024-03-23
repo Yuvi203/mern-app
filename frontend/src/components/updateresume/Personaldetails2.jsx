@@ -31,7 +31,7 @@ const Personaldetails2 = ({page, setPage, formdata, Setformdata, profile, Setpro
       <div className='img-con'>
       <div className="image-upload-container">
       <div className="box-decoration">
-      {image ? <img src={image} alt=""/> : <img src='http://i.pravatar.cc/500?img=7s' alt=''/>}
+      {image ? <img src={image} alt=""/> : <img src={users.Profile} alt=''/>}
         </div>
        <div className='file-input'>
         <label>

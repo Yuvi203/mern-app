@@ -9,7 +9,8 @@ import Buttons from '../components/Buttons'
 
 
 const User = () => { 
-  const {id} = useParams()
+ // const {id} = useParams()
+  const id = localStorage.getItem("id")
   const dispatch = useDispatch()
   const {users} = useSelector((state)=> state.resume)
   const [count, Setcount] = useState(0)
@@ -27,6 +28,7 @@ const User = () => {
      dispatch(getid(res.data._id))
     })
  }, [])
+
 
   return (
     <Container>

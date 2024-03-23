@@ -9,6 +9,9 @@ import { SelectisUser, getid, getusersall } from "./redux/slices/ResumeSlice"
 import Resumescreen2 from "./screens/Resumescreen2"
 import FollowedPeople from "./screens/FollowedPeople"
 import MessageScreen from "./screens/MessageScreen"
+import Myblogs from "./screens/Myblogs"
+import Myprojects from "./screens/Myprojects"
+
 
 const Loginscreen = lazy(()=> import("./screens/LoginScreen"))
 const Registerscreen = lazy(()=> import("./screens/RegisterScreen"))
@@ -120,8 +123,10 @@ const App = () => {
       <Route path="project" element={<Project/>}/>
       <Route path="/yournetworks" element={<Networkscreen/>}/>
       <Route path="/followedpeople" element={<FollowedPeople/>}/>
+      <Route path="/myblogs" element={<Myblogs/>}/>
+      <Route path="/myprojects" element={<Myprojects/>}/>
       <Route path="/connectusers" element={<Connectusers/>} user={user} Setuser={Setuser} loading={loading} setLoading={setLoading}/>
-      <Route path="/messages/:id" element={<MessageScreen/>}/>
+      <Route path="/messages" element={<MessageScreen/>}/>
      </>:<>
       <Route path="/" element={<Loginscreen/>}/>
       <Route path="/register" element={<Registerscreen/>}/>
@@ -131,6 +136,7 @@ const App = () => {
      </>}
     </Routes> 
     </Suspense>
+
     </div>
   )
 }

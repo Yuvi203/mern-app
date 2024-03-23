@@ -22,8 +22,27 @@ const ResumeScreen = ({Fileurl,SetFileUrl}) => {
   const [Profile, SetProfile] = useState("")
   const {ResumeLink} = useSelector((state)=> state.resume)
  
+  
   const {Firstname, Lastname, Email, Profession, Age, MobileNo, PersonalDescription, CollegeStartdate, CollegeEnddate, Degree, University, EducationDescription, CollegeStartdate2, CollegeEnddate2, Degree2, University2, EducationDescription2, Skill, Skill2, Skill3, Skill4, Skill5, Skill6, Skill7, Skill8, Skill9, Skill10, CompanyStartdate, CompanyEnddate, Roll, Companyname, ExperienceDescription, CompanyStartdate2, CompanyEnddate2, Roll2, Companyname2, ExperienceDescription2, Title, Link, Description, Title2, Link2, Description2, Address1, Address2, Location, Languages, Sociallink1, Sociallink2, Sociallink3} = formdata
- 
+  
+  const username = Firstname + Lastname || Firstname
+  const secret = import.meta.env.REACT_SECRET_KEY
+  const email = Email
+  const first_name = Firstname
+  const last_name = Lastname
+
+  const sendusers = async () =>{
+    try {
+       await axios.post("https://api.chatengine.io/users/",
+       {username, secret, email, first_name, last_name},
+       {headers:{"Private-Key":import.meta.env.REACT_SECRET_KEY}}
+       )
+      .then(res => console.log(res.data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const handleSubmit = async (e) =>{
     e.preventDefault()
     if(isEmpty(formdata)){
@@ -38,6 +57,7 @@ const ResumeScreen = ({Fileurl,SetFileUrl}) => {
         localStorage.setItem("active", res.data.activation_token)
       localStorage.setItem("id", res.data.id)
       getUsers()
+      sendusers()
       navigate("/sucess")
      })
     } catch (error) {

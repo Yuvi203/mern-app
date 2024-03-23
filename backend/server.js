@@ -1,11 +1,12 @@
 const express = require("express")
 const path = require("path")
-const mongoose = require("mongoose")
 const db = require("./config/db")
 require("dotenv").config()
 const User = require("./models/userModel")
 const userRoutes = require("./routes/userRoutes")
 const resumeRoutes = require("./routes/resumeRoutes")
+const chatRoutes = require("./routes/chatRoutes")
+const blogRoutes = require("./routes/blogRoutes")
 const cors = require("cors")
 const bodyparser = require("body-parser")
 const cookieparser = require("cookie-parser")
@@ -31,8 +32,8 @@ app.use(cors(corsOption))
 express.urlencoded({extended:false})
 app.use(userRoutes)
 app.use(resumeRoutes)
-
-
+app.use(chatRoutes)
+app.use(blogRoutes)
 
 app.get("*", (req, res)=>{
   res.sendFile(path.join(__dirname, '../frontend/index.html'))
